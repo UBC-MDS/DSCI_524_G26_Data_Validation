@@ -27,6 +27,12 @@ To use data_validation in your code:
 >>> data_validation.hello_world()
 ```
 
+## Contributors
+- Manikanth Goud Gurujala 
+- Eduardo Rafael Sanchez Martinez
+- Yonas Gebre Marie
+- Rahiq Raees
+
 ## Copyright
 
 - Copyright © 2026 Eduardo, Yonas, Manikanth, Rahiq.
