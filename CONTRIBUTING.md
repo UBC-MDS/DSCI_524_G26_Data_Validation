@@ -7,11 +7,15 @@ Every little bit helps, and credit will always be given.
 
 You can contribute in many ways, for example:
 
-* [Report bugs](#report-bugs)
-* [Fix Bugs](#fix-bugs)
-* [Implement Features](#implement-features)
-* [Write Documentation](#write-documentation)
-* [Submit Feedback](#submit-feedback)
+- [Contributing](#contributing)
+  - [Example Contributions](#example-contributions)
+    - [Report Bugs](#report-bugs)
+    - [Fix Bugs](#fix-bugs)
+    - [Implement Features](#implement-features)
+    - [Write Documentation](#write-documentation)
+    - [Submit Feedback](#submit-feedback)
+  - [Get Started!](#get-started)
+    - [Pull Request Guidelines](#pull-request-guidelines)
 
 ### Report Bugs
 
@@ -54,46 +58,52 @@ project and everybody has limited time.
 
 ## Get Started!
 
-Ready to contribute? Here's how to set up data_validation for
-local development.
+Follow these steps to set up the project locally and start contributing.
 
-1. Fork the https://github.com/EduardoRasanmar/data_validation
-   repository on GitHub.
-2. Clone your fork locally (*if you want to work locally*)
+1. Fork the repository on GitHub:  
+   https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation
+
+2. Clone your fork locally:
 
     ```shell
-    git clone git@github.com:your_name_here/data_validation.git
+    git clone git@github.com:your_github_username/DSCI_524_G26_Data_Validation.git
+    cd DSCI_524_G26_Data_Validation
     ```
 
-3. [Install hatch](https://hatch.pypa.io/latest/install/).
+3. Create and activate the Conda environment using the provided `environment.yml` file
+   (this environment already includes Hatch):
 
-4. Create a branch for local development using the default branch (typically `main`) as a starting point. Use `fix` or `feat` as a prefix for your branch name.
+    ```shell
+    conda env create -f environment.yml
+    conda activate data_validation
+    ```
+
+4. Create a new branch from the default branch (`main`).  
+   Use `fix/` or `feat/` as a prefix for your branch name:
 
     ```shell
     git checkout main
-    git checkout -b fix-name-of-your-bugfix
+    git pull
+    git checkout -b fix-short-description
     ```
 
-    Now you can make your changes locally.
-
-5. When you're done making changes, apply the quality assurance tools and check
-   that your changes pass our test suite. This is all included with tox
+5. Make your changes locally. When finished, run the test suite:
 
     ```shell
     hatch run test:run
     ```
 
-6. Commit your changes and push your branch to GitHub. Please use [semantic
-   commit messages](https://www.conventionalcommits.org/).
+6. Commit your changes and push your branch to GitHub.  
+   Please use [semantic commit messages](https://www.conventionalcommits.org/):
 
     ```shell
     git add .
-    git commit -m "fix: summarize your changes"
-    git push -u origin fix-name-of-your-bugfix
+    git commit -m "fix: short description of change"
+    git push -u origin fix-short-description
     ```
 
-7. Open the link displayed in the message when pushing your new branch in order
-   to submit a pull request.
+7. Open a pull request against the `main` branch using the link shown after pushing.
+
 
 ### Pull Request Guidelines
 
