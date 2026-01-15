@@ -1,7 +1,10 @@
 from data_validation.infer_contract import infer_contract
-
+import pytest
 import pandas as pd
 
-def infer_contract(df):
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError("df object must be a pandas DataFrame")
+def test_infer_contract_requires_dataframe():
+    with pytest.raises(TypeError, match="pandas DataFrame"):
+        infer_contract(None)
+
+    with pytest.raises(TypeError, match="pandas DataFrame"):
+        infer_contract("not a dataframe")
