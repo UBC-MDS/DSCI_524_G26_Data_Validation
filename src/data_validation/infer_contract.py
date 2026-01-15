@@ -1,5 +1,6 @@
 import pandas as pd
 from data_validation.types import Contract
+from data_validation.types import ColumnRule
 
 def infer_contract(df):
     """
@@ -27,5 +28,10 @@ def infer_contract(df):
 
     if not isinstance(df, pd.DataFrame):
         raise TypeError("df must be a pandas DataFrame")
+    
+    columns = {}
+    for column in df.columns:
+        columns[column]= ColumnRule(...)
+
     
     return Contract(columns={})
