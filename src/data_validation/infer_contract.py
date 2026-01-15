@@ -1,4 +1,5 @@
 import pandas as pd
+from data_validation.types import Contract
 
 def infer_contract(df):
     """
@@ -26,3 +27,5 @@ def infer_contract(df):
 
     if not isinstance(df, pd.DataFrame):
         raise TypeError("df must be a pandas DataFrame")
+    
+    return Contract(columns={})
