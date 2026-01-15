@@ -1,3 +1,5 @@
+import pandas as pd
+
 def infer_contract(df):
     """
     Derive a data contract from a pandas DataFrame.
@@ -21,3 +23,6 @@ def infer_contract(df):
         A Contract object mapping column names to ColumnRule definitions,
         describing the expected schema and constraints of the dataset.
     """
+
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("df must be a pandas DataFrame")
