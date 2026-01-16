@@ -378,7 +378,8 @@ def test_all_default_weight_kinds():
     ]
     result = ValidationResult(ok=False, issues=issues)
     
-    summary = summarize_violations(result)
+    # Set top_k=6 to see all 6 issues
+    summary = summarize_violations(result, top_k=6)
     
     # Verify all are counted
     assert len(summary.counts_by_kind) == 6
@@ -386,9 +387,19 @@ def test_all_default_weight_kinds():
     # Verify severity ordering (based on default weights)
     # missing_column (10) should be first
     assert summary.top_issues[0].kind == 'missing_column'
+    
+    # extra_column (8) should be second
+    assert summary.top_issues[1].kind == 'extra_column'
+    
+    # dtype (7) should be third
+    assert summary.top_issues[2].kind == 'dtype'
+    
+    # range and category (both 5) sort by column name (col4 before col5)
+    assert summary.top_issues[3].kind == 'range'
+    assert summary.top_issues[4].kind == 'category'
+    
     # missingness (3) should be last
-    assert summary.top_issues[-1].kind == 'missingness'
-
+    assert summary.top_issues[5].kind == 'missingness'
 
 # ============================================================================
 # Edge Cases and Boundary Conditions

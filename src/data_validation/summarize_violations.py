@@ -144,6 +144,16 @@ def summarize_violations(
     >>> summary.counts_by_kind
     {}
     """
+    # Define default weights AT THE VERY START
+    DEFAULT_WEIGHTS = {
+        'missing_column': 10,
+        'extra_column': 8,
+        'dtype': 7,
+        'range': 5,
+        'category': 5,
+        'missingness': 3
+    }
+    
     # Input validation - result type
     if not isinstance(result, ValidationResult):
         raise TypeError("result must be a ValidationResult instance")
@@ -171,6 +181,13 @@ def summarize_violations(
                     f"Weight for '{kind}' must be positive, got {weight}"
                 )
     
+    # Determine which weights to use
+    if weights is None:
+        weights_to_use = DEFAULT_WEIGHTS
+    else:
+        # Custom weights completely replace defaults
+        weights_to_use = weights
+    
     # Handle empty results
     if not result.issues:
         return Summary(
@@ -182,12 +199,32 @@ def summarize_violations(
     # Count issues by kind - includes ALL issues, not just top_k
     counts_by_kind = dict(Counter(issue.kind for issue in result.issues))
     
-    # TODO: implement sorting and top_k limiting
-    # For now, just return first top_k issues (not sorted)
-    top_issues = result.issues[:top_k]
+    # Sort issues by severity
+    # Tiebreaker: weight (descending), column (None first, then alphabetical), kind (alphabetical)
+    def sort_key(issue):
+        weight = weights_to_use.get(issue.kind, 1)  # Default to 1 for unknown kinds
+        # Use tuple: (False, "") for None sorts before (True, "actual_name")
+        if issue.column is None:
+            column_sort = (False, "")
+        else:
+            column_sort = (True, issue.column)
+        return (-weight, column_sort, issue.kind)
+    
+    sorted_issues = sorted(result.issues, key=sort_key)
+    
+    # Take top_k issues
+    top_issues = sorted_issues[:top_k]
     
     return Summary(
         ok=result.ok,
         top_issues=top_issues,
         counts_by_kind=counts_by_kind
     )
+
+
+
+
+
+
+
+
