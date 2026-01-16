@@ -3,6 +3,7 @@
 
 from typing import Optional, Dict, Union
 from data_validation.types import ValidationResult, Summary
+from collections import Counter
 
 def summarize_violations(
     result: ValidationResult, 
@@ -143,25 +144,32 @@ def summarize_violations(
     >>> summary.counts_by_kind
     {}
     """
-    # Input validation
+    # Input validation - result type
     if not isinstance(result, ValidationResult):
         raise TypeError("result must be a ValidationResult instance")
     
+    # Input validation - top_k type
     if not isinstance(top_k, int):
         raise TypeError("top_k must be an integer")
     
+    # Input validation - top_k value
     if top_k <= 0:
         raise ValueError("top_k must be a positive integer")
     
+    # Input validation - weights type and values
     if weights is not None:
         if not isinstance(weights, dict):
             raise TypeError("weights must be a dict or None")
         
         for kind, weight in weights.items():
             if not isinstance(weight, (int, float)):
-                raise ValueError(f"Weight for '{kind}' must be numeric, got {type(weight).__name__}")
+                raise ValueError(
+                    f"Weight for '{kind}' must be numeric, got {type(weight).__name__}"
+                )
             if weight <= 0:
-                raise ValueError(f"Weight for '{kind}' must be positive, got {weight}")
+                raise ValueError(
+                    f"Weight for '{kind}' must be positive, got {weight}"
+                )
     
     # Handle empty results
     if not result.issues:
@@ -171,6 +179,15 @@ def summarize_violations(
             counts_by_kind={}
         )
     
-    # TODO: implement the rest
-    return Summary(ok=False, top_issues=[], counts_by_kind={})
-        
+    # Count issues by kind - includes ALL issues, not just top_k
+    counts_by_kind = dict(Counter(issue.kind for issue in result.issues))
+    
+    # TODO: implement sorting and top_k limiting
+    # For now, just return first top_k issues (not sorted)
+    top_issues = result.issues[:top_k]
+    
+    return Summary(
+        ok=result.ok,
+        top_issues=top_issues,
+        counts_by_kind=counts_by_kind
+    )
