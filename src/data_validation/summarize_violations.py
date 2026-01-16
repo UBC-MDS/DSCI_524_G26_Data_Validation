@@ -143,7 +143,27 @@ def summarize_violations(
     >>> summary.counts_by_kind
     {}
     """
-        # Simple implementation - just handle empty case
+    # Input validation
+    if not isinstance(result, ValidationResult):
+        raise TypeError("result must be a ValidationResult instance")
+    
+    if not isinstance(top_k, int):
+        raise TypeError("top_k must be an integer")
+    
+    if top_k <= 0:
+        raise ValueError("top_k must be a positive integer")
+    
+    if weights is not None:
+        if not isinstance(weights, dict):
+            raise TypeError("weights must be a dict or None")
+        
+        for kind, weight in weights.items():
+            if not isinstance(weight, (int, float)):
+                raise ValueError(f"Weight for '{kind}' must be numeric, got {type(weight).__name__}")
+            if weight <= 0:
+                raise ValueError(f"Weight for '{kind}' must be positive, got {weight}")
+    
+    # Handle empty results
     if not result.issues:
         return Summary(
             ok=result.ok,
@@ -153,6 +173,4 @@ def summarize_violations(
     
     # TODO: implement the rest
     return Summary(ok=False, top_issues=[], counts_by_kind={})
-
-
-
+        
