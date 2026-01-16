@@ -143,6 +143,16 @@ def summarize_violations(
     >>> summary.counts_by_kind
     {}
     """
-    pass
+        # Simple implementation - just handle empty case
+    if not result.issues:
+        return Summary(
+            ok=result.ok,
+            top_issues=[],
+            counts_by_kind={}
+        )
+    
+    # TODO: implement the rest
+    return Summary(ok=False, top_issues=[], counts_by_kind={})
+
 
 
