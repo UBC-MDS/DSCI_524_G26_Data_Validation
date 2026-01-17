@@ -66,4 +66,40 @@ def compare_contracts(contract_a, contract_b):
     >>> report.missingness_changes
     {'age': (0.05, 0.20)}
     """
+    from data_validation.types import DriftReport
 
+    columns_a = set(contract_a.columns.keys())
+    columns_b = set(contract_b.columns.keys())
+
+    added_columns = columns_b - columns_a
+    removed_columns = columns_a - columns_b
+
+    dtype_changes = {}
+    range_changes = set()
+    category_changes = set()
+    missingness_changes = {}
+
+    for column in columns_a & columns_b:
+        rule_a = contract_a.columns[column]
+        rule_b = contract_b.columns[column]
+
+        if rule_a.dtype != rule_b.dtype:
+            dtype_changes[column] = (rule_a.dtype, rule_b.dtype)
+
+        if rule_a.min_value != rule_b.min_value or rule_a.max_value != rule_b.max_value:
+            range_changes.add(column)
+
+        if rule_a.allowed_values != rule_b.allowed_values:
+            category_changes.add(column)
+
+        if rule_a.max_missing_frac != rule_b.max_missing_frac:
+            missingness_changes[column] = (rule_a.max_missing_frac, rule_b.max_missing_frac)
+
+    return DriftReport(
+        added_columns=added_columns,
+        removed_columns=removed_columns,
+        dtype_changes=dtype_changes,
+        range_changes=range_changes,
+        category_changes=category_changes,
+        missingness_changes=missingness_changes,
+    )
