@@ -1,3 +1,7 @@
+import pandas as pd
+# Import the classes from your team's types file
+from data_validation.types import Issue, ValidationResult, Contract
+
 def validate_contract(df, contract, strict=True):
     """
     Validate a pandas DataFrame against a predefined data contract.
@@ -49,79 +53,97 @@ def validate_contract(df, contract, strict=True):
     True
     
     """
-    errors = []
-    warnings = []
-    column_details = {}
-
+    issues = []
     df_columns = set(df.columns)
     contract_columns = set(contract.columns.keys())
 
     # --- Column presence checks ---
-    required_columns = {
-        col for col, rules in contract.columns.items() if rules.required
-    }
-
-    missing_columns = required_columns - df_columns
+    # Note: Using ColumnRule attributes from your types.py
+    # Since ColumnRule doesn't have a 'required' attribute, 
+    # we treat all columns in the contract as required.
+    missing_columns = contract_columns - df_columns
     extra_columns = df_columns - contract_columns
 
     if missing_columns:
-        msg = f"Missing required columns: {missing_columns}"
-        if strict:
-            errors.append(msg)
-        else:
-            warnings.append(msg)
+        for col in missing_columns:
+            issues.append(Issue(
+                kind="missing_column",
+                message=f"Missing required column: {col}",
+                column=col,
+                expected="Present",
+                observed="Missing"
+            ))
 
     if extra_columns and strict:
-        errors.append(f"Unexpected extra columns: {extra_columns}")
+        for col in extra_columns:
+            issues.append(Issue(
+                kind="extra_column",
+                message=f"Unexpected extra column: {col}",
+                column=col,
+                expected="Absent",
+                observed="Present"
+            ))
 
     # --- Per-column validation ---
     for col, rules in contract.columns.items():
-        column_details[col] = []
-
         if col not in df.columns:
             continue
 
         series = df[col]
 
         # --- Data type check ---
-        if not pd.api.types.is_dtype_equal(series.dtype, rules.dtype):
-            error = f"{col}: expected dtype {rules.dtype}, got {series.dtype}"
-            errors.append(error)
-            column_details[col].append(error)
+        # Comparing series.dtype name to the string in rules.dtype
+        if str(series.dtype) != rules.dtype:
+            issues.append(Issue(
+                kind="dtype",
+                message=f"{col}: expected {rules.dtype}, got {series.dtype}",
+                column=col,
+                expected=rules.dtype,
+                observed=str(series.dtype)
+            ))
 
-        # --- Null check ---
-        if not rules.allow_nulls and series.isnull().any():
-            error = f"{col}: contains null values but nulls are not allowed"
-            errors.append(error)
-            column_details[col].append(error)
+        # --- Missingness check (max_missing_frac) ---
+        missing_frac = series.isnull().mean()
+        if missing_frac > rules.max_missing_frac:
+            issues.append(Issue(
+                kind="missingness",
+                message=f"{col}: missing fraction {missing_frac} exceeds {rules.max_missing_frac}",
+                column=col,
+                expected=rules.max_missing_frac,
+                observed=missing_frac
+            ))
 
         # --- Numeric range check ---
-        if rules.value_range is not None:
-            if not pd.api.types.is_numeric_dtype(series):
-                error = f"{col}: value_range specified but column is not numeric"
-                errors.append(error)
-                column_details[col].append(error)
-            else:
-                min_val, max_val = rules.value_range
-                mask = series.dropna().between(min_val, max_val, inclusive="both")
-                if not mask.all():
-                    error = f"{col}: values found outside range {rules.value_range}"
-                    errors.append(error)
-                    column_details[col].append(error)
+        if pd.api.types.is_numeric_dtype(series):
+            if rules.min_value is not None and series.min() < rules.min_value:
+                issues.append(Issue(
+                    kind="range",
+                    message=f"{col}: min value {series.min()} below {rules.min_value}",
+                    column=col,
+                    expected=rules.min_value,
+                    observed=series.min()
+                ))
+            if rules.max_value is not None and series.max() > rules.max_value:
+                issues.append(Issue(
+                    kind="range",
+                    message=f"{col}: max value {series.max()} exceeds {rules.max_value}",
+                    column=col,
+                    expected=rules.max_value,
+                    observed=series.max()
+                ))
 
         # --- Categorical values check ---
         if rules.allowed_values is not None:
-            invalid = set(series.dropna().unique()) - set(rules.allowed_values)
+            observed_vals = set(series.dropna().unique().astype(str))
+            invalid = observed_vals - set(rules.allowed_values)
             if invalid:
-                error = f"{col}: invalid categorical values {invalid}"
-                errors.append(error)
-                column_details[col].append(error)
+                issues.append(Issue(
+                    kind="category",
+                    message=f"{col}: invalid values {invalid}",
+                    column=col,
+                    expected=rules.allowed_values,
+                    observed=observed_vals
+                ))
 
-    passed = len(errors) == 0
-
-    return ValidationResult(
-        passed=passed,
-        errors=errors,
-        warnings=warnings,
-        column_details=column_details
-    )
+    # Validation passes if no issues were found
+    return ValidationResult(ok=len(issues) == 0, issues=issues)
