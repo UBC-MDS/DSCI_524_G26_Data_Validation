@@ -89,6 +89,18 @@ class DriftReport:
     dtype_changes: Dict[str, Tuple[str, str]] = field(default_factory=dict)  # col -> (old, new)
     range_changes: Set[str] = field(default_factory=set)                    # cols whose min/max changed
     category_changes: Set[str] = field(default_factory=set)                 # cols whose allowed_values changed
+    missingness_changes: Dict[str, Tuple[float, float]] = field(default_factory=dict)
+
+    @property
+    def has_drift(self) -> bool:
+        return any([
+            self.added_columns,
+            self.removed_columns,
+            self.dtype_changes,
+            self.range_changes,
+            self.category_changes,
+            self.missingness_changes,
+        ])
 
 
 # -------------------------
