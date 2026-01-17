@@ -31,7 +31,11 @@ def infer_contract(df):
     
     columns = {}
     for column in df.columns:
-        columns[column]= ColumnRule(...)
+        columns[column]= ColumnRule(dtype=type(df[column]),
+                                    max_missing_frac=2.5,
+                                    min_value=df[column].min,
+                                    max_value=df[column].max,
+                                    allowed_values=df[column].unique)
 
     
-    return Contract(columns={})
+    return Contract(columns=columns)
