@@ -59,7 +59,7 @@ def validate_contract(df, contract, strict=True):
     df_columns = set(df.columns)
     contract_columns = set(contract.columns.keys())
 
-    # --- Column presence checks ---
+    # --- Column presence checks ----
     # Note: Using ColumnRule attributes from your types.py
     # Since ColumnRule doesn't have a 'required' attribute, 
     # we treat all columns in the contract as required.
