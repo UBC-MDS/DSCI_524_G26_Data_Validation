@@ -158,6 +158,33 @@ def test_invalid_missing_frac_raises_valueerror():
         compare_contracts(contract_a, contract_b)
 
 
+def test_non_columnrule_raises_typeerror():
+    """Non-ColumnRule entries raise TypeError."""
+    contract_a = Contract(columns={"age": "not-a-rule"})
+    contract_b = Contract(columns={"age": ColumnRule(dtype="int")})
+
+    with pytest.raises(TypeError):
+        compare_contracts(contract_a, contract_b)
+
+
+def test_non_numeric_missing_frac_raises_valueerror():
+    """Non-numeric max_missing_frac raises ValueError."""
+    contract_a = Contract(columns={"age": ColumnRule(dtype="int", max_missing_frac="high")})
+    contract_b = Contract(columns={"age": ColumnRule(dtype="int")})
+
+    with pytest.raises(ValueError):
+        compare_contracts(contract_a, contract_b)
+
+
+def test_invalid_contract_b_raises_valueerror():
+    """Invalid contract_b triggers validation on the second contract."""
+    contract_a = Contract(columns={"age": ColumnRule(dtype="int")})
+    contract_b = Contract(columns={"age": ColumnRule(dtype="int", max_missing_frac=2.0)})
+
+    with pytest.raises(ValueError):
+        compare_contracts(contract_a, contract_b)
+
+
 def test_min_greater_than_max_raises_valueerror():
     """Invalid range bounds raise ValueError."""
     contract_a = Contract(columns={"age": ColumnRule(dtype="int", min_value=10.0, max_value=1.0)})
