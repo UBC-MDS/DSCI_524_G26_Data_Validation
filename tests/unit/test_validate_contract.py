@@ -37,3 +37,9 @@ def test_validate_contract():
     result_range = validate_contract(df_out_of_range, contract)
     assert result_range.ok is False [cite: 111]
     assert any(i.kind == "range" for i in result_range.issues)
+
+    # --- Edge Case 5: Invalid Categorical Values ---
+    df_bad_cat = pd.DataFrame({"age": [25], "city": ["Seattle"]})
+    result_cat = validate_contract(df_bad_cat, contract)
+    assert result_cat.ok is False [cite: 108]
+    assert any(i.kind == "category" for i in result_cat.issues)

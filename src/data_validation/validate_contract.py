@@ -6,11 +6,12 @@ def validate_contract(df, contract, strict=True):
     """
     Validate a pandas DataFrame against a predefined data contract.
 
-    This function checks whether the input DataFrame conforms to the provided
-    contract by validating column presence, data types, missingness rules,
-    numeric value ranges, and allowed categorical values. The validation
-    outcome is returned as a structured ValidationResult containing overall
-    pass/fail status along with detailed per-column errors and warnings.
+    This function validates an input DataFrame by comparing it against a
+    contract that defines expected columns, data types, missingness
+    thresholds, numeric value limits, and allowed categorical values.
+    All columns defined in the contract are treated as required. Validation
+    results are returned as a collection of structured issues describing
+    any detected violations.
 
     Parameters
     ----------
@@ -18,38 +19,39 @@ def validate_contract(df, contract, strict=True):
         The DataFrame to be validated.
 
     contract : Contract
-        A data contract specifying the expected schema, data types,
-        missingness constraints, value ranges for numeric columns, and
-        allowed categories for categorical columns.
+        A data contract defining the expected columns and validation rules
+        for each column, including:
+        - expected data type (as a string),
+        - maximum allowed fraction of missing values,
+        - minimum and maximum values for numeric columns,
+        - allowed categorical values.
 
     strict : bool, optional, default=True
-        If True, validation fails when extra or missing columns are detected.
-        If False, extra columns are ignored and missing columns generate
-        warnings instead of errors.
+        If True, the presence of extra columns in the DataFrame that are not
+        defined in the contract is reported as validation issues. If False,
+        extra columns are ignored.
 
     Returns
     -------
     ValidationResult
         An object containing:
-        - a boolean indicating whether validation passed,
-        - a collection of validation errors,
-        - a collection of validation warnings,
-        - per-column diagnostic information.
+        - a boolean flag (`ok`) indicating whether validation succeeded,
+        - a list of Issue objects describing all detected validation problems.
 
     Notes
     -----
     The function performs the following checks:
-    - Missing required columns
-    - Unexpected extra columns
-    - Data type mismatches
-    - Missing value (null) violations
-    - Numeric range violations
-    - Unseen or invalid categorical values
+    - Missing columns defined in the contract
+    - Unexpected extra columns (when strict mode is enabled)
+    - Data type mismatches based on dtype string comparison
+    - Missingness violations based on maximum allowed missing fraction
+    - Minimum and maximum value violations for numeric columns
+    - Invalid or unseen categorical values
 
     Examples
     --------
     >>> result = validate_contract(df, contract)
-    >>> result.passed
+    >>> result.ok
     True
     
     """
