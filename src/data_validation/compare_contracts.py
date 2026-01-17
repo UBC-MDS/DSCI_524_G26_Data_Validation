@@ -1,39 +1,69 @@
 def compare_contracts(contract_a, contract_b):
     """
-    Compare two data contracts to detect schema and distribution drift.
+    Compare two data contracts to detect schema and constraint drift.
 
-    This function examines the differences between a baseline contract
-    (for example, training data) and a new contract (for example, recent
-    production data). It identifies schema drift such as added or removed
-    columns and data type changes, along with distribution drift such as
-    numeric range shifts or categorical domain churn.
+    This function compares a reference (baseline) contract against an observed
+    (latest) contract and reports differences in:
+    - schema: added/removed columns and dtype changes
+    - constraints: numeric bound changes, categorical domain changes, and
+      missingness threshold changes
+
+    The comparison is directional:
+    - "added" means present in contract_b but not in contract_a
+    - "removed" means present in contract_a but not in contract_b
+    - "old" refers to contract_a and "new" refers to contract_b
+
+    Drift definitions
+    -----------------
+    - Added columns:
+        column in contract_b.columns but not in contract_a.columns
+    - Removed columns:
+        column in contract_a.columns but not in contract_b.columns
+    - Dtype changes:
+        for columns present in both contracts, ColumnRule.dtype differs
+        (reported as (old_dtype, new_dtype))
+    - Range changes (numeric bounds):
+        for columns present in both contracts, min_value and/or max_value differs
+        (only meaningful when numeric bounds are provided; this function compares
+        the stored contract values, not raw data)
+    - Category changes:
+        for columns present in both contracts, allowed_values differs
+    - Missingness changes:
+        for columns present in both contracts, max_missing_frac differs
+        (reported as (old_max_missing_frac, new_max_missing_frac))
 
     Parameters
     ----------
     contract_a : Contract
-        The baseline contract representing expected schema and constraints.
+        Reference contract representing the expected schema and constraints.
 
     contract_b : Contract
-        The comparison contract representing the latest observed schema
-        and constraints.
+        Observed contract representing the latest schema and constraints.
 
     Returns
     -------
     DriftReport
-        A structured report summarizing detected drift, including:
-        - schema changes (added/removed columns, dtype changes),
-        - distribution changes (range shifts, new/missing categories),
-        - severity levels or categories for each change.
+        A report containing only detected differences between the two contracts:
+        - added_columns, removed_columns
+        - dtype_changes (col -> (old, new))
+        - range_changes (set of columns whose min/max changed)
+        - category_changes (set of columns whose allowed_values changed)
+        - missingness_changes (col -> (old, new))
 
     Notes
     -----
-    Typical usage compares a stable reference contract against a newly
-    inferred contract to decide whether downstream model or pipeline
-    retraining is required.
+    - This function compares contract metadata only; it does not inspect raw data.
+    - Drift is evaluated only for columns that exist in both contracts, except for
+      added/removed columns which are detected via column name differences.
+    - None handling for optional fields (min_value/max_value/allowed_values) is
+      implementation-defined; document your chosen rule if it matters for users.
 
     Examples
     --------
     >>> report = compare_contracts(contract_a, contract_b)
     >>> report.has_drift
     True
+    >>> report.missingness_changes
+    {'age': (0.05, 0.20)}
     """
+
