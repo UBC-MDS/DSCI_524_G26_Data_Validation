@@ -12,7 +12,7 @@ def test_infer_contract_requires_dataframe():
     with pytest.raises(TypeError, match="pandas DataFrame"):
         infer_contract("not a dataframe")
 
-#Test object returned is an object fo typr Contract
+#Test object returned is an object fo type Contract
 def test_infer_contract_returns_contract():
     df = pd.DataFrame({"a": [1, 2, 3]})
     contract = infer_contract(df)
@@ -41,7 +41,8 @@ def test_infer_contract_creates_rule_per_column():
     for rule in contract.columns.values():
         assert isinstance(rule, ColumnRule)
 
-#edge cases designed with support of LLM 
+#Edge tests developed with support of LLM to ensure functionality 
+#Edge test: missingness is a valid fraction
 
 def test_missing_fraction_between_zero_and_one():
     df = pd.DataFrame({"a": [1, None, 3]})
@@ -49,6 +50,8 @@ def test_missing_fraction_between_zero_and_one():
 
     frac = contract.columns["a"].max_missing_frac
     assert 0.0 <= frac <= 1.0
+
+#Edge test: numeric vs categorical handling
 
 def test_numeric_and_categorical_rules():
     df = pd.DataFrame({
