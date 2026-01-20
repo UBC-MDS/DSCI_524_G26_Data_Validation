@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Tests
 - Added comprehensive unit tests for `compare_contracts`, covering schema drift, constraint drift, edge cases, and error handling.
+- Added comprehensive unit tests for `validate_contract`, covering edge cases, and error handling.
 
 ## [0.1.0] - (1979-01-01)
 
