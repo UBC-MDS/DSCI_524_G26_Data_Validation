@@ -1,7 +1,7 @@
 import pandas as pd
 from data_validation.types import Contract
 from data_validation.types import ColumnRule
-from pandas.api.types import is_numeric_dtype, is_categorical_dtype, is_bool_dtype
+from pandas.api.types import is_numeric_dtype, is_bool_dtype
 
 
 def infer_contract(df):
@@ -18,7 +18,7 @@ def infer_contract(df):
     ----------
     df : pd.DataFrame
         A pandas DataFrame used to derive the data contract. This should be an
-        example of “good” data that represents the expected structure and
+        example of "good" data that represents the expected structure and
         constraints of future datasets.
 
     Returns
@@ -49,7 +49,8 @@ def infer_contract(df):
 
         # only categorical-like columns get allowed_values
         allowed_values = None
-        if s.dtype == "object" or is_categorical_dtype(s) or is_bool_dtype(s):
+        # Check for string, object, categorical, or bool types
+        if dtype_str in ("object", "str", "string") or s.dtype.name == "category" or is_bool_dtype(s):
             allowed_values = set(map(str, s.dropna().unique()))
 
         columns[col] = ColumnRule(
@@ -60,6 +61,4 @@ def infer_contract(df):
             allowed_values=allowed_values,
         )
 
-
-    
     return Contract(columns=columns)
