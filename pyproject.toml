@@ -40,7 +40,9 @@ classifiers = [
 # TODO: add keywords
 keywords = []
 # TODO: add dependencies
-dependencies = []
+dependencies = [
+    "pandas>=2.0.0"
+]
 
 [project.urls]
 Homepage = "https://github.com/EduardoRasanmar/data_validation"
