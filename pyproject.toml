@@ -11,12 +11,12 @@ requires = ["hatchling"]
 ################################################################################
 
 [project]
-name = "data_validation"
+name = "pyos_data_validation"
 # You can chose to use dynamic versioning with hatch or static where you add it manually.
 version = "0.1.0"
 
 description = """
-data_validation is a lightweight Python package for defining, validating, and comparing
+pyos_data_validation is a lightweight Python package for defining, validating, and comparing
 data expectations in tabular datasets.
 It allows data scientists to infer data contracts from existing data, validate new
 datasets against those contracts, and detect schema or distributional drift over time.
@@ -151,7 +151,7 @@ features = [
 ]
 
 [[tool.hatch.envs.test.matrix]]
-python = ["3.10", "3.11", "3.12", "3.13"]
+python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
 [tool.hatch.envs.test.scripts]
 run = "pytest {args:--cov=data_validation --cov-report=term-missing --cov-report=xml}"
