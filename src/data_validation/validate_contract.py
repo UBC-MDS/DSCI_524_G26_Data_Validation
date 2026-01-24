@@ -94,14 +94,21 @@ def validate_contract(df, contract, strict=True):
         series = df[col]
 
         # --- Data type check ---
-        # Comparing series.dtype name to the string in rules.dtype
-        if str(series.dtype) != rules.dtype:
+        # Treat "str" and "object" as equivalent for string columns
+        observed_dtype = str(series.dtype)
+        expected_dtype = rules.dtype
+        
+        # Normalize string types
+        if observed_dtype in ("object", "str", "string") and expected_dtype in ("object", "str", "string"):
+            # Both are string types, consider them matching
+            pass
+        elif observed_dtype != expected_dtype:
             issues.append(Issue(
                 kind="dtype",
-                message=f"{col}: expected {rules.dtype}, got {series.dtype}",
+                message=f"{col}: expected {expected_dtype}, got {observed_dtype}",
                 column=col,
-                expected=rules.dtype,
-                observed=str(series.dtype)
+                expected=expected_dtype,
+                observed=observed_dtype
             ))
 
         # --- Missingness check (max_missing_frac) ---
