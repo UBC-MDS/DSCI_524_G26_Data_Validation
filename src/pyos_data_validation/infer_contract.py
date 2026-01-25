@@ -30,7 +30,7 @@ def infer_contract(df):
 
     if not isinstance(df, pd.DataFrame):
         raise TypeError("df must be a pandas DataFrame")
-    
+
     columns = {}
     for col in df.columns:
         s = df[col]
@@ -50,7 +50,11 @@ def infer_contract(df):
         # only categorical-like columns get allowed_values
         allowed_values = None
         # Check for string, object, categorical, or bool types
-        if dtype_str in ("object", "str", "string") or s.dtype.name == "category" or is_bool_dtype(s):
+        if (
+            dtype_str in ("object", "str", "string")
+            or s.dtype.name == "category"
+            or is_bool_dtype(s)
+        ):
             allowed_values = set(map(str, s.dropna().unique()))
 
         columns[col] = ColumnRule(

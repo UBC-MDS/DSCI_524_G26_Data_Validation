@@ -16,9 +16,11 @@ def test_validate_contract():
     contract = Contract(
         name="test_contract",
         columns={
-            "age": ColumnRule(dtype="int64", min_value=0, max_value=100, max_missing_frac=0.0),
-            "city": ColumnRule(dtype="object", allowed_values={"Vancouver", "Toronto"})
-        }
+            "age": ColumnRule(
+                dtype="int64", min_value=0, max_value=100, max_missing_frac=0.0
+            ),
+            "city": ColumnRule(dtype="object", allowed_values={"Vancouver", "Toronto"}),
+        },
     )
 
     # --- Edge Case 1: Valid DataFrame (success path) ---
@@ -35,7 +37,9 @@ def test_validate_contract():
     assert any(issue.kind == "missing_column" for issue in result_strict.issues)
 
     # --- Edge Case 3: Data type mismatch ---
-    df_wrong_type = pd.DataFrame({"age": ["25", "30"], "city": ["Vancouver", "Toronto"]})
+    df_wrong_type = pd.DataFrame(
+        {"age": ["25", "30"], "city": ["Vancouver", "Toronto"]}
+    )
     # Should fail because 'age' is str instead of int64
     result_type = validate_contract(df_wrong_type, contract)
     assert result_type.ok is False
