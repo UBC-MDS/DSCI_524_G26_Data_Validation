@@ -7,7 +7,7 @@ Improvements based on LLM review conducted 2026-01-16.
 
 import pytest
 from pyos_data_validation.summarize_violations import summarize_violations
-from pyos_data_validation.types import ValidationResult, Issue, Summary
+from pyos_data_validation.types import ValidationResult, Issue
 
 
 # ============================================================================
