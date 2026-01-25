@@ -69,7 +69,6 @@ def test_infer_contract_empty_dataframe_returns_empty_columns():
     contract = infer_contract(df)
     assert contract.columns == {}
 
-
 # 2) Missingness fraction should be exact for a known pattern
 def test_missing_fraction_exact_value():
     df = pd.DataFrame({"a": [1, None, None, 4]})  # 2 missing out of 4 = 0.5
@@ -81,6 +80,12 @@ def test_all_missing_column_missingness_is_one():
     df = pd.DataFrame({"a": [None, None, None]})
     contract = infer_contract(df)
     assert contract.columns["a"].max_missing_frac == 1.0
+
+# 4) Boolean column should be treated like categorical-like for allowed_values
+def test_boolean_column_allowed_values():
+    df = pd.DataFrame({"flag": [True, False, True]})
+    contract = infer_contract(df)
+    assert contract.columns["flag"].allowed_values == {"True", "False"}
 
 
 
