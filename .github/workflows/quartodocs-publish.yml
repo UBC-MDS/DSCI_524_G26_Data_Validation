@@ -1,13 +1,16 @@
 name: 03b-quartodoc-publish
 
 on:
-  pull_request:
-    branches: [ documentation, main ]
-  workflow_dispatch:
+  push:
+    branches: [main]          # publish only on main branch
+  pull_request:               # build docs for PRs to check for errors
+    branches: [documentation, main]
+  workflow_dispatch:          # manual trigger
 
 jobs:
   build-docs:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
 
@@ -17,22 +20,19 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: |
-          pip install -e ".[docs]"
-          #pip install quartodoc
+        run: pip install -e ".[docs]"
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Build quartodoc
-        run: |
-          quartodoc build --verbose
+        run: quartodoc build --verbose
 
       - name: Render Quarto site
-        run: |
-          quarto render
-  
+        run: quarto render
+
       - name: Publish to gh-pages branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
