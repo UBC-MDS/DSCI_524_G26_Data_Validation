@@ -76,6 +76,13 @@ def test_missing_fraction_exact_value():
     contract = infer_contract(df)
     assert contract.columns["a"].max_missing_frac == 0.5
 
+# 3) All-missing numeric column should not crash; missingness should be 1.0
+def test_all_missing_column_missingness_is_one():
+    df = pd.DataFrame({"a": [None, None, None]})
+    contract = infer_contract(df)
+    assert contract.columns["a"].max_missing_frac == 1.0
+
+
 
 
 
