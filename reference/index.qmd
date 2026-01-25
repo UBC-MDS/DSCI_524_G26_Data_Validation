@@ -1,0 +1,22 @@
+# Function reference {.doc .doc-index}
+
+## Core functions
+
+| | |
+| --- | --- |
+| [infer_contract](infer_contract.qmd#pyos_data_validation.infer_contract) |  |
+| [validate_contract](validate_contract.qmd#pyos_data_validation.validate_contract) |  |
+| [compare_contracts](compare_contracts.qmd#pyos_data_validation.compare_contracts) |  |
+| [summarize_violations](summarize_violations.qmd#pyos_data_validation.summarize_violations) |  |
+
+## Types
+
+| | |
+| --- | --- |
+| [types.ColumnRule](types.ColumnRule.qmd#pyos_data_validation.types.ColumnRule) | Minimal per-column expectations. |
+| [types.Contract](types.Contract.qmd#pyos_data_validation.types.Contract) | Dataset contract = mapping of column name -> ColumnRule. |
+| [types.Issue](types.Issue.qmd#pyos_data_validation.types.Issue) | A single validation issue. |
+| [types.ValidationResult](types.ValidationResult.qmd#pyos_data_validation.types.ValidationResult) | Output of validate_contract(). |
+| [types.DriftReport](types.DriftReport.qmd#pyos_data_validation.types.DriftReport) | Output of compare_contracts(). |
+| [types.Summary](types.Summary.qmd#pyos_data_validation.types.Summary) | Output of summarize_violations(). |
+| [types.ContractViolationError](types.ContractViolationError.qmd#pyos_data_validation.types.ContractViolationError) | Raised by validate_and_fail when validation fails. |

@@ -1,0 +1,7 @@
+# types.ValidationResult { #pyos_data_validation.types.ValidationResult }
+
+```python
+types.ValidationResult(ok, issues=list())
+```
+
+Output of validate_contract().

@@ -1,0 +1,12 @@
+# types.Issue { #pyos_data_validation.types.Issue }
+
+```python
+types.Issue(kind, message, column=None, observed=None, expected=None)
+```
+
+A single validation issue.
+
+kind examples:
+  - "missing_column", "extra_column"
+  - "dtype", "missingness", "range", "category"
+column=None for dataset-level issues.

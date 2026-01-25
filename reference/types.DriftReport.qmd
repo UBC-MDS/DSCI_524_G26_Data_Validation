@@ -1,0 +1,16 @@
+# types.DriftReport { #pyos_data_validation.types.DriftReport }
+
+```python
+types.DriftReport(
+    added_columns=set(),
+    removed_columns=set(),
+    dtype_changes=dict(),
+    range_changes=set(),
+    category_changes=set(),
+    missingness_changes=dict(),
+)
+```
+
+Output of compare_contracts().
+
+Keep it tiny: only what changed between two contracts.

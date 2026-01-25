@@ -1,0 +1,9 @@
+# types.Summary { #pyos_data_validation.types.Summary }
+
+```python
+types.Summary(ok, top_issues=list(), counts_by_kind=dict())
+```
+
+Output of summarize_violations().
+
+counts_by_kind is useful for CI logs ("dtype: 2, missingness: 1").

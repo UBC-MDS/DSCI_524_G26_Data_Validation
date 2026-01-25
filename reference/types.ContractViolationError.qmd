@@ -1,0 +1,7 @@
+# types.ContractViolationError { #pyos_data_validation.types.ContractViolationError }
+
+```python
+types.ContractViolationError()
+```
+
+Raised by validate_and_fail when validation fails.

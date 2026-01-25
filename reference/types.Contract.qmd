@@ -1,0 +1,7 @@
+# types.Contract { #pyos_data_validation.types.Contract }
+
+```python
+types.Contract(columns, name='contract')
+```
+
+Dataset contract = mapping of column name -> ColumnRule.

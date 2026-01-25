@@ -1,0 +1,18 @@
+# types.ColumnRule { #pyos_data_validation.types.ColumnRule }
+
+```python
+types.ColumnRule(
+    dtype,
+    max_missing_frac=0.0,
+    min_value=None,
+    max_value=None,
+    allowed_values=None,
+)
+```
+
+Minimal per-column expectations.
+
+dtype: simple string such as "int", "float", "string", "bool", "datetime", "category"
+max_missing_frac: fraction of missing values allowed in [0, 1]
+min_value/max_value: numeric bounds (optional)
+allowed_values: allowed categorical values (optional)
