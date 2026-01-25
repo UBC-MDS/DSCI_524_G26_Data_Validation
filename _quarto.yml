@@ -1,0 +1,55 @@
+# ------------------------------------------------------------------------------
+# Quarto Project Configuration
+# ------------------------------------------------------------------------------
+
+project:
+  type: website
+  output-dir: docs
+
+# ------------------------------------------------------------------------------
+# Website configuration
+# ------------------------------------------------------------------------------
+
+website:
+  title: "data_validation"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "API Reference"
+        href: reference/index.qmd
+      - text: "GitHub"
+        href: https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation
+
+  sidebar:
+    contents:
+      - text: "Home"
+        href: index.qmd
+      - text: "API Reference"
+        contents:
+          - reference/index.qmd
+
+# ------------------------------------------------------------------------------
+# Output format
+# ------------------------------------------------------------------------------
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+
+# ------------------------------------------------------------------------------
+# Quartodoc API docs configuration
+# ------------------------------------------------------------------------------
+
+quartodoc:
+  package: data_validation
+  dir: reference
+
+  sections:
+    - title: Core functions
+      contents:
+        - infer_contract
+        - validate_contract
+        - compare_contracts
+        - summarize_violations

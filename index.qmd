@@ -1,0 +1,88 @@
+---
+title: "data_validation"
+---
+
+## Overview
+
+`data_validation` is a lightweight Python package for defining, validating, and
+comparing **data contracts** for tabular datasets. A data contract captures
+assumptions about a dataset’s schema, data types, missingness, numeric ranges,
+and categorical values.
+
+The package supports a simple, reproducible workflow:
+
+1. Infer a contract from a reference dataset  
+2. Validate new data against the contract  
+3. Compare contracts to detect schema or distribution drift  
+4. Summarize validation failures for debugging and CI use  
+
+---
+
+## Installation
+
+Install the package from source:
+
+```bash
+git clone https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation.git
+cd DSCI_524_G26_Data_Validation
+pip install -e .
+```
+
+---
+
+## Example Usage
+
+```python
+import pandas as pd
+from data_validation import (
+    infer_contract,
+    validate_contract,
+    compare_contracts,
+    summarize_violations,
+    validate_and_fail,
+)
+
+df = pd.DataFrame({
+    "age": [25, 40, 35],
+    "salary": [50000, 75000, 62000],
+    "department": ["HR", "Engineering", "HR"]
+})
+```
+
+### Inferring a contract
+
+```python
+contract = infer_contract(df)
+```
+This infers expected column types, missingness constraints, numeric ranges,
+and categorical domains from the data.
+
+### Validating data 
+
+```python
+result = validate_contract(df, contract)
+result.passed
+```
+This checks whether the data conforms to the contract and returns a structured
+validation result containing errors and warnings.
+
+### Comparing Contracts
+
+```python
+new_contract = infer_contract(df)
+drift_report = compare_contracts(contract, new_contract)
+```
+This identifies schema or distribution drift between two data contracts.
+
+### Summarizing violations 
+
+```python
+summary = summarize_violations(result)
+summary
+```
+This produces a concise summary of the most important validation failures.
+
+## API Reference
+
+See the [API Reference](reference/index.qmd) for detailed documentation of all
+functions and objects.
