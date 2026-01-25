@@ -1,6 +1,6 @@
-# data_validation/types.py
+# pyos_data_validation/types.py
 """
-Minimal shared dataclasses for the toy `data_validation` project.
+Minimal shared dataclasses for the toy `pyos_data_validation` project.
 
 These types are intentionally small and "data-only" (no pandas dependency, no logic).
 They support:
@@ -21,6 +21,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 # Contract
 # -------------------------
 
+
 @dataclass(frozen=True)
 class ColumnRule:
     """
@@ -31,6 +32,7 @@ class ColumnRule:
     min_value/max_value: numeric bounds (optional)
     allowed_values: allowed categorical values (optional)
     """
+
     dtype: str
     max_missing_frac: float = 0.0
     min_value: Optional[float] = None
@@ -41,6 +43,7 @@ class ColumnRule:
 @dataclass(frozen=True)
 class Contract:
     """Dataset contract = mapping of column name -> ColumnRule."""
+
     columns: Dict[str, ColumnRule]
     name: str = "contract"
 
@@ -48,6 +51,7 @@ class Contract:
 # -------------------------
 # Validation
 # -------------------------
+
 
 @dataclass(frozen=True)
 class Issue:
@@ -59,6 +63,7 @@ class Issue:
       - "dtype", "missingness", "range", "category"
     column=None for dataset-level issues.
     """
+
     kind: str
     message: str
     column: Optional[str] = None
@@ -69,6 +74,7 @@ class Issue:
 @dataclass(frozen=True)
 class ValidationResult:
     """Output of validate_contract()."""
+
     ok: bool
     issues: List[Issue] = field(default_factory=list)
 
@@ -77,6 +83,7 @@ class ValidationResult:
 # Contract comparison (drift)
 # -------------------------
 
+
 @dataclass(frozen=True)
 class DriftReport:
     """
@@ -84,28 +91,36 @@ class DriftReport:
 
     Keep it tiny: only what changed between two contracts.
     """
+
     added_columns: Set[str] = field(default_factory=set)
     removed_columns: Set[str] = field(default_factory=set)
-    dtype_changes: Dict[str, Tuple[str, str]] = field(default_factory=dict)  # col -> (old, new)
-    range_changes: Set[str] = field(default_factory=set)                    # cols whose min/max changed
-    category_changes: Set[str] = field(default_factory=set)                 # cols whose allowed_values changed
+    dtype_changes: Dict[str, Tuple[str, str]] = field(
+        default_factory=dict
+    )  # col -> (old, new)
+    range_changes: Set[str] = field(default_factory=set)  # cols whose min/max changed
+    category_changes: Set[str] = field(
+        default_factory=set
+    )  # cols whose allowed_values changed
     missingness_changes: Dict[str, Tuple[float, float]] = field(default_factory=dict)
 
     @property
     def has_drift(self) -> bool:
-        return any([
-            self.added_columns,
-            self.removed_columns,
-            self.dtype_changes,
-            self.range_changes,
-            self.category_changes,
-            self.missingness_changes,
-        ])
+        return any(
+            [
+                self.added_columns,
+                self.removed_columns,
+                self.dtype_changes,
+                self.range_changes,
+                self.category_changes,
+                self.missingness_changes,
+            ]
+        )
 
 
 # -------------------------
 # Summarization
 # -------------------------
+
 
 @dataclass(frozen=True)
 class Summary:
@@ -114,6 +129,7 @@ class Summary:
 
     counts_by_kind is useful for CI logs ("dtype: 2, missingness: 1").
     """
+
     ok: bool
     top_issues: List[Issue] = field(default_factory=list)
     counts_by_kind: Dict[str, int] = field(default_factory=dict)
@@ -123,7 +139,8 @@ class Summary:
 # CI helper exception
 # -------------------------
 
+
 class ContractViolationError(AssertionError):
     """Raised by validate_and_fail when validation fails."""
+
     pass
- 

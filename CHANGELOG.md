@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Improved `DriftReport` to include missingness-related changes.
 - Updated documentation for `compare_contracts` with explicit drift definitions and directionality.
+- Renamed the package in documentation/metadata to `pyos_data_validation`.
 
 ### Tests
 - Added comprehensive unit tests for `compare_contracts`, covering schema drift, constraint drift, edge cases, and error handling.

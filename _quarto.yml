@@ -1,0 +1,70 @@
+# ------------------------------------------------------------------------------
+# Quarto Project Configuration
+# ------------------------------------------------------------------------------
+
+project:
+  type: website
+  output-dir: docs
+
+# ------------------------------------------------------------------------------
+# Website configuration
+# ------------------------------------------------------------------------------
+
+website:
+  title: "pyos_data_validation"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "API Reference"
+        href: reference/index.qmd
+      - text: "Contributing"
+        href: CONTRIBUTING.md
+      - text: "Development"
+        href: DEVELOPMENT.md
+      - text: "Code of Conduct"
+        href: CODE_OF_CONDUCT.md
+      - text: "GitHub"
+        href: https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation
+
+  sidebar:
+    contents:
+      - text: "Home"
+        href: index.qmd
+      - text: "API Reference"
+        contents:
+          - reference/index.qmd
+
+# ------------------------------------------------------------------------------
+# Output format
+# ------------------------------------------------------------------------------
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+
+# ------------------------------------------------------------------------------
+# Quartodoc API docs configuration
+# ------------------------------------------------------------------------------
+
+quartodoc:
+  package: pyos_data_validation
+  dir: reference
+
+  sections:
+    - title: Core functions
+      contents:
+        - infer_contract
+        - validate_contract
+        - compare_contracts
+        - summarize_violations
+    - title: Types
+      contents:
+        - types.ColumnRule
+        - types.Contract
+        - types.Issue
+        - types.ValidationResult
+        - types.DriftReport
+        - types.Summary
+        - types.ContractViolationError

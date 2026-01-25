@@ -7,7 +7,8 @@ is up to you. This test example provides a single test for the example.py
 module.
 """
 
-from data_validation.example import add_numbers
+from pyos_data_validation.example import add_numbers
+
 
 def test_add_numbers():
     """
@@ -17,4 +18,4 @@ def test_add_numbers():
     """
     out = add_numbers(1, 2)
     expected_out = 3
-    assert  out == expected_out, f"Expected {expected_out} but got {out}"
+    assert out == expected_out, f"Expected {expected_out} but got {out}"

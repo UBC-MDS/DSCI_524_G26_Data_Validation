@@ -4,8 +4,8 @@ Basic unit tests for compare_contracts.
 
 import pytest
 
-from data_validation.compare_contracts import compare_contracts
-from data_validation.types import ColumnRule, Contract
+from pyos_data_validation.compare_contracts import compare_contracts
+from pyos_data_validation.types import ColumnRule, Contract
 
 
 def test_added_and_removed_columns():
@@ -33,8 +33,12 @@ def test_dtype_change():
 
 def test_range_change():
     """Detect min/max range changes for shared columns."""
-    contract_a = Contract(columns={"score": ColumnRule(dtype="float", min_value=0.0, max_value=1.0)})
-    contract_b = Contract(columns={"score": ColumnRule(dtype="float", min_value=-1.0, max_value=1.0)})
+    contract_a = Contract(
+        columns={"score": ColumnRule(dtype="float", min_value=0.0, max_value=1.0)}
+    )
+    contract_b = Contract(
+        columns={"score": ColumnRule(dtype="float", min_value=-1.0, max_value=1.0)}
+    )
 
     report = compare_contracts(contract_a, contract_b)
 
@@ -46,12 +50,18 @@ def test_category_and_missingness_changes():
     """Detect category and missingness changes for shared columns."""
     contract_a = Contract(
         columns={
-            "status": ColumnRule(dtype="category", allowed_values={"new", "old"}, max_missing_frac=0.05)
+            "status": ColumnRule(
+                dtype="category", allowed_values={"new", "old"}, max_missing_frac=0.05
+            )
         }
     )
     contract_b = Contract(
         columns={
-            "status": ColumnRule(dtype="category", allowed_values={"new", "old", "unknown"}, max_missing_frac=0.10)
+            "status": ColumnRule(
+                dtype="category",
+                allowed_values={"new", "old", "unknown"},
+                max_missing_frac=0.10,
+            )
         }
     )
 
@@ -64,8 +74,12 @@ def test_category_and_missingness_changes():
 
 def test_missingness_only_change():
     """Detect missingness drift without other changes."""
-    contract_a = Contract(columns={"age": ColumnRule(dtype="int", max_missing_frac=0.05)})
-    contract_b = Contract(columns={"age": ColumnRule(dtype="int", max_missing_frac=0.10)})
+    contract_a = Contract(
+        columns={"age": ColumnRule(dtype="int", max_missing_frac=0.05)}
+    )
+    contract_b = Contract(
+        columns={"age": ColumnRule(dtype="int", max_missing_frac=0.10)}
+    )
 
     report = compare_contracts(contract_a, contract_b)
 
@@ -77,8 +91,16 @@ def test_missingness_only_change():
 
 def test_category_only_change():
     """Detect category drift without other changes."""
-    contract_a = Contract(columns={"status": ColumnRule(dtype="category", allowed_values={"new", "old"})})
-    contract_b = Contract(columns={"status": ColumnRule(dtype="category", allowed_values={"new", "old", "unknown"})})
+    contract_a = Contract(
+        columns={"status": ColumnRule(dtype="category", allowed_values={"new", "old"})}
+    )
+    contract_b = Contract(
+        columns={
+            "status": ColumnRule(
+                dtype="category", allowed_values={"new", "old", "unknown"}
+            )
+        }
+    )
 
     report = compare_contracts(contract_a, contract_b)
 
@@ -90,8 +112,12 @@ def test_category_only_change():
 
 def test_range_change_none_to_value():
     """None to value for range triggers drift."""
-    contract_a = Contract(columns={"score": ColumnRule(dtype="float", min_value=None, max_value=None)})
-    contract_b = Contract(columns={"score": ColumnRule(dtype="float", min_value=0.0, max_value=1.0)})
+    contract_a = Contract(
+        columns={"score": ColumnRule(dtype="float", min_value=None, max_value=None)}
+    )
+    contract_b = Contract(
+        columns={"score": ColumnRule(dtype="float", min_value=0.0, max_value=1.0)}
+    )
 
     report = compare_contracts(contract_a, contract_b)
 
@@ -100,8 +126,12 @@ def test_range_change_none_to_value():
 
 def test_category_change_none_to_set():
     """None to set for categories triggers drift."""
-    contract_a = Contract(columns={"status": ColumnRule(dtype="category", allowed_values=None)})
-    contract_b = Contract(columns={"status": ColumnRule(dtype="category", allowed_values={"new", "old"})})
+    contract_a = Contract(
+        columns={"status": ColumnRule(dtype="category", allowed_values=None)}
+    )
+    contract_b = Contract(
+        columns={"status": ColumnRule(dtype="category", allowed_values={"new", "old"})}
+    )
 
     report = compare_contracts(contract_a, contract_b)
 
@@ -110,8 +140,12 @@ def test_category_change_none_to_set():
 
 def test_none_to_none_no_drift():
     """None to None for optional fields yields no drift."""
-    contract_a = Contract(columns={"score": ColumnRule(dtype="float", min_value=None, max_value=None)})
-    contract_b = Contract(columns={"score": ColumnRule(dtype="float", min_value=None, max_value=None)})
+    contract_a = Contract(
+        columns={"score": ColumnRule(dtype="float", min_value=None, max_value=None)}
+    )
+    contract_b = Contract(
+        columns={"score": ColumnRule(dtype="float", min_value=None, max_value=None)}
+    )
 
     report = compare_contracts(contract_a, contract_b)
 
@@ -121,8 +155,12 @@ def test_none_to_none_no_drift():
 
 def test_dtype_change_blocks_range_drift():
     """Range drift is not reported when dtype changes."""
-    contract_a = Contract(columns={"score": ColumnRule(dtype="int", min_value=0.0, max_value=10.0)})
-    contract_b = Contract(columns={"score": ColumnRule(dtype="float", min_value=-1.0, max_value=10.0)})
+    contract_a = Contract(
+        columns={"score": ColumnRule(dtype="int", min_value=0.0, max_value=10.0)}
+    )
+    contract_b = Contract(
+        columns={"score": ColumnRule(dtype="float", min_value=-1.0, max_value=10.0)}
+    )
 
     report = compare_contracts(contract_a, contract_b)
 
@@ -132,8 +170,16 @@ def test_dtype_change_blocks_range_drift():
 
 def test_dtype_change_blocks_category_drift():
     """Category drift is not reported when dtype changes."""
-    contract_a = Contract(columns={"status": ColumnRule(dtype="category", allowed_values={"new", "old"})})
-    contract_b = Contract(columns={"status": ColumnRule(dtype="string", allowed_values={"new", "old", "unknown"})})
+    contract_a = Contract(
+        columns={"status": ColumnRule(dtype="category", allowed_values={"new", "old"})}
+    )
+    contract_b = Contract(
+        columns={
+            "status": ColumnRule(
+                dtype="string", allowed_values={"new", "old", "unknown"}
+            )
+        }
+    )
 
     report = compare_contracts(contract_a, contract_b)
 
@@ -151,7 +197,9 @@ def test_invalid_contract_type_raises_typeerror():
 
 def test_invalid_missing_frac_raises_valueerror():
     """Invalid missingness fraction raises ValueError."""
-    contract_a = Contract(columns={"age": ColumnRule(dtype="int", max_missing_frac=1.5)})
+    contract_a = Contract(
+        columns={"age": ColumnRule(dtype="int", max_missing_frac=1.5)}
+    )
     contract_b = Contract(columns={"age": ColumnRule(dtype="int")})
 
     with pytest.raises(ValueError):
@@ -169,7 +217,9 @@ def test_non_columnrule_raises_typeerror():
 
 def test_non_numeric_missing_frac_raises_valueerror():
     """Non-numeric max_missing_frac raises ValueError."""
-    contract_a = Contract(columns={"age": ColumnRule(dtype="int", max_missing_frac="high")})
+    contract_a = Contract(
+        columns={"age": ColumnRule(dtype="int", max_missing_frac="high")}
+    )
     contract_b = Contract(columns={"age": ColumnRule(dtype="int")})
 
     with pytest.raises(ValueError):
@@ -179,7 +229,9 @@ def test_non_numeric_missing_frac_raises_valueerror():
 def test_invalid_contract_b_raises_valueerror():
     """Invalid contract_b triggers validation on the second contract."""
     contract_a = Contract(columns={"age": ColumnRule(dtype="int")})
-    contract_b = Contract(columns={"age": ColumnRule(dtype="int", max_missing_frac=2.0)})
+    contract_b = Contract(
+        columns={"age": ColumnRule(dtype="int", max_missing_frac=2.0)}
+    )
 
     with pytest.raises(ValueError):
         compare_contracts(contract_a, contract_b)
@@ -187,8 +239,12 @@ def test_invalid_contract_b_raises_valueerror():
 
 def test_min_greater_than_max_raises_valueerror():
     """Invalid range bounds raise ValueError."""
-    contract_a = Contract(columns={"age": ColumnRule(dtype="int", min_value=10.0, max_value=1.0)})
-    contract_b = Contract(columns={"age": ColumnRule(dtype="int", min_value=0.0, max_value=10.0)})
+    contract_a = Contract(
+        columns={"age": ColumnRule(dtype="int", min_value=10.0, max_value=1.0)}
+    )
+    contract_b = Contract(
+        columns={"age": ColumnRule(dtype="int", min_value=0.0, max_value=10.0)}
+    )
 
     with pytest.raises(ValueError):
         compare_contracts(contract_a, contract_b)
@@ -197,11 +253,28 @@ def test_min_greater_than_max_raises_valueerror():
 @pytest.mark.parametrize(
     "contract_a,contract_b",
     [
-        (Contract(columns={"a": ColumnRule(dtype="int")}), Contract(columns={"b": ColumnRule(dtype="int")})),
-        (Contract(columns={"a": ColumnRule(dtype="int")}), Contract(columns={"a": ColumnRule(dtype="float")})),
-        (Contract(columns={"a": ColumnRule(dtype="float", min_value=0.0)}), Contract(columns={"a": ColumnRule(dtype="float", min_value=1.0)})),
-        (Contract(columns={"a": ColumnRule(dtype="category", allowed_values={"x"})}), Contract(columns={"a": ColumnRule(dtype="category", allowed_values={"x", "y"})})),
-        (Contract(columns={"a": ColumnRule(dtype="int", max_missing_frac=0.05)}), Contract(columns={"a": ColumnRule(dtype="int", max_missing_frac=0.10)})),
+        (
+            Contract(columns={"a": ColumnRule(dtype="int")}),
+            Contract(columns={"b": ColumnRule(dtype="int")}),
+        ),
+        (
+            Contract(columns={"a": ColumnRule(dtype="int")}),
+            Contract(columns={"a": ColumnRule(dtype="float")}),
+        ),
+        (
+            Contract(columns={"a": ColumnRule(dtype="float", min_value=0.0)}),
+            Contract(columns={"a": ColumnRule(dtype="float", min_value=1.0)}),
+        ),
+        (
+            Contract(columns={"a": ColumnRule(dtype="category", allowed_values={"x"})}),
+            Contract(
+                columns={"a": ColumnRule(dtype="category", allowed_values={"x", "y"})}
+            ),
+        ),
+        (
+            Contract(columns={"a": ColumnRule(dtype="int", max_missing_frac=0.05)}),
+            Contract(columns={"a": ColumnRule(dtype="int", max_missing_frac=0.10)}),
+        ),
     ],
 )
 def test_has_drift_true_for_any_nonempty_change(contract_a, contract_b):
@@ -252,8 +325,12 @@ def test_multiple_columns_mixed_drift():
 
 def test_missingness_reports_old_new_order():
     """Missingness changes are reported as (old, new)."""
-    contract_a = Contract(columns={"age": ColumnRule(dtype="int", max_missing_frac=0.05)})
-    contract_b = Contract(columns={"age": ColumnRule(dtype="int", max_missing_frac=0.20)})
+    contract_a = Contract(
+        columns={"age": ColumnRule(dtype="int", max_missing_frac=0.05)}
+    )
+    contract_b = Contract(
+        columns={"age": ColumnRule(dtype="int", max_missing_frac=0.20)}
+    )
 
     report = compare_contracts(contract_a, contract_b)
 
@@ -272,8 +349,12 @@ def test_dtype_reports_old_new_order():
 
 def test_no_drift():
     """No differences yields an empty report."""
-    contract_a = Contract(columns={"age": ColumnRule(dtype="int", min_value=0.0, max_value=120.0)})
-    contract_b = Contract(columns={"age": ColumnRule(dtype="int", min_value=0.0, max_value=120.0)})
+    contract_a = Contract(
+        columns={"age": ColumnRule(dtype="int", min_value=0.0, max_value=120.0)}
+    )
+    contract_b = Contract(
+        columns={"age": ColumnRule(dtype="int", min_value=0.0, max_value=120.0)}
+    )
 
     report = compare_contracts(contract_a, contract_b)
 
