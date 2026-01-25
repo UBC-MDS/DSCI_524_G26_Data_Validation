@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>validate_contract – data_validation</title>
+<title>validate_contract – pyos_data_validation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">data_validation</span>
+    <span class="navbar-title">pyos_data_validation</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -131,6 +131,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link" href="../reference/index.html"> 
 <span class="menu-text">API Reference</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../CONTRIBUTING.html"> 
+<span class="menu-text">Contributing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../DEVELOPMENT.html"> 
+<span class="menu-text">Development</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../CODE_OF_CONDUCT.html"> 
+<span class="menu-text">Code of Conduct</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation"> 
@@ -192,11 +204,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data_validation.validate_contract" id="toc-data_validation.validate_contract" class="nav-link active" data-scroll-target="#data_validation.validate_contract">validate_contract</a>
+  <li><a href="#pyos_data_validation.validate_contract" id="toc-pyos_data_validation.validate_contract" class="nav-link active" data-scroll-target="#pyos_data_validation.validate_contract">validate_contract</a>
   <ul class="collapse">
   <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
   <ul class="collapse">
-  <li><a href="#data_validation.validate_contract.validate_contract" id="toc-data_validation.validate_contract.validate_contract" class="nav-link" data-scroll-target="#data_validation.validate_contract.validate_contract">validate_contract</a></li>
+  <li><a href="#pyos_data_validation.validate_contract.validate_contract" id="toc-pyos_data_validation.validate_contract.validate_contract" class="nav-link" data-scroll-target="#pyos_data_validation.validate_contract.validate_contract">validate_contract</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -208,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="data_validation.validate_contract" class="level1">
+<section id="pyos_data_validation.validate_contract" class="level1">
 <h1>validate_contract</h1>
 <p><code>validate_contract</code></p>
 <section id="functions" class="level2">
@@ -222,13 +234,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="#data_validation.validate_contract.validate_contract">validate_contract</a></td>
+<td><a href="#pyos_data_validation.validate_contract.validate_contract">validate_contract</a></td>
 <td>Validate a pandas DataFrame against a predefined data contract.</td>
 </tr>
 </tbody>
 </table>
-<section id="data_validation.validate_contract.validate_contract" class="level3">
-<h3 class="anchored" data-anchor-id="data_validation.validate_contract.validate_contract">validate_contract</h3>
+<section id="pyos_data_validation.validate_contract.validate_contract" class="level3">
+<h3 class="anchored" data-anchor-id="pyos_data_validation.validate_contract.validate_contract">validate_contract</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>validate_contract.validate_contract(df, contract, strict<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Validate a pandas DataFrame against a predefined data contract.</p>
 <p>This function validates an input DataFrame by comparing it against a contract that defines expected columns, data types, missingness thresholds, numeric value limits, and allowed categorical values. All columns defined in the contract are treated as required. Validation results are returned as a collection of structured issues describing any detected violations.</p>

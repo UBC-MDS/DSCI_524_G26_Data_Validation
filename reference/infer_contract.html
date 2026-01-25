@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>infer_contract – data_validation</title>
+<title>infer_contract – pyos_data_validation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">data_validation</span>
+    <span class="navbar-title">pyos_data_validation</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -131,6 +131,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link" href="../reference/index.html"> 
 <span class="menu-text">API Reference</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../CONTRIBUTING.html"> 
+<span class="menu-text">Contributing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../DEVELOPMENT.html"> 
+<span class="menu-text">Development</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../CODE_OF_CONDUCT.html"> 
+<span class="menu-text">Code of Conduct</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation"> 
@@ -192,11 +204,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data_validation.infer_contract" id="toc-data_validation.infer_contract" class="nav-link active" data-scroll-target="#data_validation.infer_contract">infer_contract</a>
+  <li><a href="#pyos_data_validation.infer_contract" id="toc-pyos_data_validation.infer_contract" class="nav-link active" data-scroll-target="#pyos_data_validation.infer_contract">infer_contract</a>
   <ul class="collapse">
   <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
   <ul class="collapse">
-  <li><a href="#data_validation.infer_contract.infer_contract" id="toc-data_validation.infer_contract.infer_contract" class="nav-link" data-scroll-target="#data_validation.infer_contract.infer_contract">infer_contract</a></li>
+  <li><a href="#pyos_data_validation.infer_contract.infer_contract" id="toc-pyos_data_validation.infer_contract.infer_contract" class="nav-link" data-scroll-target="#pyos_data_validation.infer_contract.infer_contract">infer_contract</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -208,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="data_validation.infer_contract" class="level1">
+<section id="pyos_data_validation.infer_contract" class="level1">
 <h1>infer_contract</h1>
 <p><code>infer_contract</code></p>
 <section id="functions" class="level2">
@@ -222,13 +234,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="#data_validation.infer_contract.infer_contract">infer_contract</a></td>
+<td><a href="#pyos_data_validation.infer_contract.infer_contract">infer_contract</a></td>
 <td>Derive a data contract from a pandas DataFrame.</td>
 </tr>
 </tbody>
 </table>
-<section id="data_validation.infer_contract.infer_contract" class="level3">
-<h3 class="anchored" data-anchor-id="data_validation.infer_contract.infer_contract">infer_contract</h3>
+<section id="pyos_data_validation.infer_contract.infer_contract" class="level3">
+<h3 class="anchored" data-anchor-id="pyos_data_validation.infer_contract.infer_contract">infer_contract</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>infer_contract.infer_contract(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Derive a data contract from a pandas DataFrame.</p>
 <p>Derives per-column expectations—including expected data type, allowable missingness, optional numeric bounds, and optional categorical domains. The resulting contract defines the expected schema and validation constraints for future datasets, based on the observed structure of the input DataFrame.</p>

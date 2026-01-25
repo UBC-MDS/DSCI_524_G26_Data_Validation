@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>index – data_validation</title>
+<title>index – pyos_data_validation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -80,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">data_validation</span>
+    <span class="navbar-title">pyos_data_validation</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -96,6 +96,18 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="../reference/index.html"> 
 <span class="menu-text">API Reference</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../CONTRIBUTING.html"> 
+<span class="menu-text">Contributing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../DEVELOPMENT.html"> 
+<span class="menu-text">Development</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../CODE_OF_CONDUCT.html"> 
+<span class="menu-text">Code of Conduct</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation"> 
@@ -160,6 +172,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#function-reference" id="toc-function-reference" class="nav-link active" data-scroll-target="#function-reference">Function reference</a>
   <ul class="collapse">
   <li><a href="#core-functions" id="toc-core-functions" class="nav-link" data-scroll-target="#core-functions">Core functions</a></li>
+  <li><a href="#types" id="toc-types" class="nav-link" data-scroll-target="#types">Types</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -177,20 +190,55 @@ ul.task-list li input[type="checkbox"] {
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
-<td><a href="../reference/infer_contract.html#data_validation.infer_contract">infer_contract</a></td>
+<td><a href="../reference/infer_contract.html#pyos_data_validation.infer_contract">infer_contract</a></td>
 <td></td>
 </tr>
 <tr class="even">
-<td><a href="../reference/validate_contract.html#data_validation.validate_contract">validate_contract</a></td>
+<td><a href="../reference/validate_contract.html#pyos_data_validation.validate_contract">validate_contract</a></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><a href="../reference/compare_contracts.html#data_validation.compare_contracts">compare_contracts</a></td>
+<td><a href="../reference/compare_contracts.html#pyos_data_validation.compare_contracts">compare_contracts</a></td>
 <td></td>
 </tr>
 <tr class="even">
-<td><a href="../reference/summarize_violations.html#data_validation.summarize_violations">summarize_violations</a></td>
+<td><a href="../reference/summarize_violations.html#pyos_data_validation.summarize_violations">summarize_violations</a></td>
 <td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="types" class="level2">
+<h2 class="anchored" data-anchor-id="types">Types</h2>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td><a href="../reference/types.ColumnRule.html#pyos_data_validation.types.ColumnRule">types.ColumnRule</a></td>
+<td>Minimal per-column expectations.</td>
+</tr>
+<tr class="even">
+<td><a href="../reference/types.Contract.html#pyos_data_validation.types.Contract">types.Contract</a></td>
+<td>Dataset contract = mapping of column name -&gt; ColumnRule.</td>
+</tr>
+<tr class="odd">
+<td><a href="../reference/types.Issue.html#pyos_data_validation.types.Issue">types.Issue</a></td>
+<td>A single validation issue.</td>
+</tr>
+<tr class="even">
+<td><a href="../reference/types.ValidationResult.html#pyos_data_validation.types.ValidationResult">types.ValidationResult</a></td>
+<td>Output of validate_contract().</td>
+</tr>
+<tr class="odd">
+<td><a href="../reference/types.DriftReport.html#pyos_data_validation.types.DriftReport">types.DriftReport</a></td>
+<td>Output of compare_contracts().</td>
+</tr>
+<tr class="even">
+<td><a href="../reference/types.Summary.html#pyos_data_validation.types.Summary">types.Summary</a></td>
+<td>Output of summarize_violations().</td>
+</tr>
+<tr class="odd">
+<td><a href="../reference/types.ContractViolationError.html#pyos_data_validation.types.ContractViolationError">types.ContractViolationError</a></td>
+<td>Raised by validate_and_fail when validation fails.</td>
 </tr>
 </tbody>
 </table>

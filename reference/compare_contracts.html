@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>compare_contracts – data_validation</title>
+<title>compare_contracts – pyos_data_validation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">data_validation</span>
+    <span class="navbar-title">pyos_data_validation</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -131,6 +131,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link" href="../reference/index.html"> 
 <span class="menu-text">API Reference</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../CONTRIBUTING.html"> 
+<span class="menu-text">Contributing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../DEVELOPMENT.html"> 
+<span class="menu-text">Development</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../CODE_OF_CONDUCT.html"> 
+<span class="menu-text">Code of Conduct</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation"> 
@@ -192,11 +204,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data_validation.compare_contracts" id="toc-data_validation.compare_contracts" class="nav-link active" data-scroll-target="#data_validation.compare_contracts">compare_contracts</a>
+  <li><a href="#pyos_data_validation.compare_contracts" id="toc-pyos_data_validation.compare_contracts" class="nav-link active" data-scroll-target="#pyos_data_validation.compare_contracts">compare_contracts</a>
   <ul class="collapse">
   <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
   <ul class="collapse">
-  <li><a href="#data_validation.compare_contracts.compare_contracts" id="toc-data_validation.compare_contracts.compare_contracts" class="nav-link" data-scroll-target="#data_validation.compare_contracts.compare_contracts">compare_contracts</a></li>
+  <li><a href="#pyos_data_validation.compare_contracts.compare_contracts" id="toc-pyos_data_validation.compare_contracts.compare_contracts" class="nav-link" data-scroll-target="#pyos_data_validation.compare_contracts.compare_contracts">compare_contracts</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -208,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="data_validation.compare_contracts" class="level1">
+<section id="pyos_data_validation.compare_contracts" class="level1">
 <h1>compare_contracts</h1>
 <p><code>compare_contracts</code></p>
 <section id="functions" class="level2">
@@ -222,13 +234,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="#data_validation.compare_contracts.compare_contracts">compare_contracts</a></td>
+<td><a href="#pyos_data_validation.compare_contracts.compare_contracts">compare_contracts</a></td>
 <td>Compare two data contracts to detect schema and constraint drift.</td>
 </tr>
 </tbody>
 </table>
-<section id="data_validation.compare_contracts.compare_contracts" class="level3">
-<h3 class="anchored" data-anchor-id="data_validation.compare_contracts.compare_contracts">compare_contracts</h3>
+<section id="pyos_data_validation.compare_contracts.compare_contracts" class="level3">
+<h3 class="anchored" data-anchor-id="pyos_data_validation.compare_contracts.compare_contracts">compare_contracts</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>compare_contracts.compare_contracts(contract_a, contract_b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Compare two data contracts to detect schema and constraint drift.</p>
 <p>This function compares a reference (baseline) contract against an observed (latest) contract and reports differences in: - schema: added/removed columns and dtype changes - constraints: numeric bound changes, categorical domain changes, and missingness threshold changes</p>
