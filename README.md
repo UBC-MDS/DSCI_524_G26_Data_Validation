@@ -111,11 +111,17 @@ Format code with ruff:
 
 ### Building documentation
 
+Generate the API reference documentation:
+
+    $ quartodoc build
+
 Build the documentation locally using Quarto:
 
     $ quarto render
 
-The built documentation will be available in the `_site/` directory. Open `_site/index.html` in your browser to view it.
+The built documentation will be available in the `docs/` directory. You can open it in your browser:
+
+    $ open docs/index.html
 
 ### Deploying documentation
 
