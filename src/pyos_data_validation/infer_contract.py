@@ -26,6 +26,27 @@ def infer_contract(df):
     Contract
         A Contract object mapping column names to ColumnRule definitions,
         describing the expected schema and constraints of the dataset.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> from data_validation.infer_contract import infer_contract
+    >>> df = pd.DataFrame({
+    ...     "age": [20, 30, 40],
+    ...     "height": [170.0, 180.5, 175.2],
+    ...     "color": ["red", "blue", "red"],
+    ... })
+    >>> contract = infer_contract(df)
+    >>> contract.name
+    'contract'
+    >>> sorted(contract.columns.keys())
+    ['age', 'color', 'height']
+    >>> contract.columns["age"].dtype
+    'int'
+    >>> contract.columns["age"].min_value <= contract.columns["age"].max_value
+    True
+    >>> contract.columns["color"].allowed_values == {"red", "blue"}
+    True
     """
 
     if not isinstance(df, pd.DataFrame):
