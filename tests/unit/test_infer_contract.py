@@ -69,3 +69,13 @@ def test_infer_contract_empty_dataframe_returns_empty_columns():
     contract = infer_contract(df)
     assert contract.columns == {}
 
+
+# 2) Missingness fraction should be exact for a known pattern
+def test_missing_fraction_exact_value():
+    df = pd.DataFrame({"a": [1, None, None, 4]})  # 2 missing out of 4 = 0.5
+    contract = infer_contract(df)
+    assert contract.columns["a"].max_missing_frac == 0.5
+
+
+
+
