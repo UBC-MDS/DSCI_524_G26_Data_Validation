@@ -30,8 +30,7 @@ jobs:
 
       - name: Run ruff lint checker
         run: |
-          #ruff check .
-          ruff check src/
+          ruff check .
 
   build-deploy:
     needs: unit-test-pytest
