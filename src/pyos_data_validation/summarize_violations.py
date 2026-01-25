@@ -2,7 +2,7 @@
 # (Incorporating LLM Review Feedback)
 
 from typing import Optional, Dict, Union
-from data_validation.types import ValidationResult, Summary
+from pyos_data_validation.types import ValidationResult, Summary
 from collections import Counter
 
 def summarize_violations(
@@ -95,7 +95,7 @@ def summarize_violations(
     --------
     Basic usage with default weights:
     
-    >>> from data_validation import validate_contract, summarize_violations
+    >>> from pyos_data_validation import validate_contract, summarize_violations
     >>> result = validate_contract(df, contract)
     >>> summary = summarize_violations(result, top_k=3)
     >>> print(f"Found {len(summary.top_issues)} critical issues")

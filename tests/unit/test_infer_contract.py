@@ -1,8 +1,8 @@
-from data_validation.infer_contract import infer_contract
+from pyos_data_validation.infer_contract import infer_contract
 import pytest
 import pandas as pd
-from data_validation.types import Contract
-from data_validation.types import ColumnRule
+from pyos_data_validation.types import Contract
+from pyos_data_validation.types import ColumnRule
 
 #Test Error handling. Confirm error occurss if user input something other than a pandas DataFrame 
 def test_infer_contract_requires_dataframe():

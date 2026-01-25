@@ -1,6 +1,6 @@
 import pandas as pd
-from data_validation.validate_contract import validate_contract
-from data_validation.types import Contract, ColumnRule
+from pyos_data_validation.validate_contract import validate_contract
+from pyos_data_validation.types import Contract, ColumnRule
 
 
 def test_validate_contract():

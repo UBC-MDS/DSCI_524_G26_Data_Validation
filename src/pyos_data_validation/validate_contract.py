@@ -1,6 +1,6 @@
 import pandas as pd
 # Import the classes from your team's types file
-from data_validation.types import Issue, ValidationResult, Contract
+from pyos_data_validation.types import Issue, ValidationResult, Contract
 
 def validate_contract(df, contract, strict=True):
     """

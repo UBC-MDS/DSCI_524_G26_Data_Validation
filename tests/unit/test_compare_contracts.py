@@ -4,8 +4,8 @@ Basic unit tests for compare_contracts.
 
 import pytest
 
-from data_validation.compare_contracts import compare_contracts
-from data_validation.types import ColumnRule, Contract
+from pyos_data_validation.compare_contracts import compare_contracts
+from pyos_data_validation.types import ColumnRule, Contract
 
 
 def test_added_and_removed_columns():

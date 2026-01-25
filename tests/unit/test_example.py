@@ -7,7 +7,7 @@ is up to you. This test example provides a single test for the example.py
 module.
 """
 
-from data_validation.example import add_numbers
+from pyos_data_validation.example import add_numbers
 
 def test_add_numbers():
     """

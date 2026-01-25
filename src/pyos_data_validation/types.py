@@ -1,6 +1,6 @@
-# data_validation/types.py
+# pyos_data_validation/types.py
 """
-Minimal shared dataclasses for the toy `data_validation` project.
+Minimal shared dataclasses for the toy `pyos_data_validation` project.
 
 These types are intentionally small and "data-only" (no pandas dependency, no logic).
 They support:

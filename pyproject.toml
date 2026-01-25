@@ -92,7 +92,7 @@ only-packages = true
 # This tells Hatch to build the package from the src/ directory.
 # Read more about src layouts here: https://www.pyopensci.org/python-package-guide/package-structure-code/python-package-structure.html
 [tool.hatch.build.targets.wheel]
-packages = ["src/data_validation"]
+packages = ["src/pyos_data_validation"]
 
 
 
@@ -103,8 +103,8 @@ markers = ["raises"] # Tells pytest to not raise a warning if you use @pytest.ma
 
 [tool.coverage.paths]
 source = [
-    "src/data_validation",
-    "*/site-packages/data_validation",
+    "src/pyos_data_validation",
+    "*/site-packages/pyos_data_validation",
 ]
 
 [tool.coverage.run]
@@ -154,7 +154,7 @@ features = [
 python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
 [tool.hatch.envs.test.scripts]
-run = "pytest {args:--cov=data_validation --cov-report=term-missing --cov-report=xml}"
+run = "pytest {args:--cov=pyos_data_validation --cov-report=term-missing --cov-report=xml}"
 
 #--------------- Build and preview your documentation ---------------#
 
@@ -171,7 +171,7 @@ features = [
 # hatch run docs:serve will serve them 'live' on your computer locally
 [tool.hatch.envs.docs.scripts]
 build = ["sphinx-build {args:-W -b html docs docs/_build}"]
-serve = ["sphinx-autobuild docs --watch src/data_validation {args:-b html docs/_build/serve}"]
+serve = ["sphinx-autobuild docs --watch src/pyos_data_validation {args:-b html docs/_build/serve}"]
 
 
 

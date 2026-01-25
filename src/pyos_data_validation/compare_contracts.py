@@ -66,7 +66,7 @@ def compare_contracts(contract_a, contract_b):
     >>> report.missingness_changes
     {'age': (0.05, 0.20)}
     """
-    from data_validation.types import ColumnRule, Contract, DriftReport
+    from pyos_data_validation.types import ColumnRule, Contract, DriftReport
 
     if not isinstance(contract_a, Contract) or not isinstance(contract_b, Contract):
         raise TypeError("contract_a and contract_b must be Contract instances")

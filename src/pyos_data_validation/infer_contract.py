@@ -1,6 +1,6 @@
 import pandas as pd
-from data_validation.types import Contract
-from data_validation.types import ColumnRule
+from pyos_data_validation.types import Contract
+from pyos_data_validation.types import ColumnRule
 from pandas.api.types import is_numeric_dtype, is_bool_dtype
 
 

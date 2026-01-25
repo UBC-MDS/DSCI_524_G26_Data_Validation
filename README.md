@@ -41,7 +41,8 @@ new data against it.
 
 ```python
     import pandas as pd
-    from pyos_data_validation import infer_contract, validate_contract
+    from pyos_data_validation.infer_contract import infer_contract
+    from pyos_data_validation.validate_contract import validate_contract
 
     # example data
     df = pd.DataFrame({
