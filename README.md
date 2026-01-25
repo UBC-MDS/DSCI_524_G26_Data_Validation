@@ -1,12 +1,15 @@
-# Welcome to data_validation
+# Welcome to pyos_data_validation
 
 |        |        |
 |--------|--------|
-| Package | [![Latest PyPI Version](https://img.shields.io/pypi/v/data_validation.svg)](https://pypi.org/project/data_validation/) [![Supported Python Versions](https://img.shields.io/pypi/pyversions/data_validation.svg)](https://pypi.org/project/data_validation/)  |
+| Package | [![Latest PyPI Version](https://img.shields.io/pypi/v/pyos_data_validation.svg)](https://pypi.org/project/pyos_data_validation/) [![Supported Python Versions](https://img.shields.io/pypi/pyversions/pyos_data_validation.svg)](https://pypi.org/project/pyos_data_validation/) |
+| CI / Release | [![deploy-test-pypi](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml) |
 | Meta   | [![Code of Conduct](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md) |
 
 
-`data_validation` is a lightweight Python package for defining, validating, and comparing **data contracts** for tabular datasets. It enables data scientists to formalize assumptions about their data—such as schema, missingness constraints, numeric ranges, and categorical domains—and to automatically validate new datasets against those expectations. The package supports reproducible workflows and CI-friendly automation by producing structured validation outputs and clear, actionable error messages suitable for use in unit tests and GitHub Actions.
+
+
+`pyos_data_validation` is a lightweight Python package for defining, validating, and comparing **data contracts** for tabular datasets. It enables data scientists to formalize assumptions about their data—such as schema, missingness constraints, numeric ranges, and categorical domains—and to automatically validate new datasets against those expectations. The package supports reproducible workflows and CI-friendly automation by producing structured validation outputs and clear, actionable error messages suitable for use in unit tests and GitHub Actions.
 
 ---
 
@@ -25,14 +28,14 @@
   Converts a `ValidationResult` into an actionable summary by ranking columns by severity, grouping issues by type (schema, missingness, or distribution), and highlighting the most critical failures to address first. This supports concise reporting in CI logs and pull requests without being limited to simple formatting.
 
 
-The `data_validation` package is inspired by existing data quality and schema-validation tools such as Pandera, Great Expectations, and Pydantic. Pandera and Great Expectations provide powerful, production-grade frameworks for defining and validating data expectations on tabular datasets, while Pydantic focuses on validating structured Python objects and API inputs. In contrast, `data_validation` is intentionally lightweight and educational in scope, focusing on a minimal set of abstractions—data contracts, validation results, and contract comparison—to support small projects, teaching, and CI-friendly workflows. Unlike production-grade tools, this package prioritizes clarity and minimal abstractions over completeness.
+The `pyos_data_validation` package is inspired by existing data quality and schema-validation tools such as Pandera, Great Expectations, and Pydantic. Pandera and Great Expectations provide powerful, production-grade frameworks for defining and validating data expectations on tabular datasets, while Pydantic focuses on validating structured Python objects and API inputs. In contrast, `pyos_data_validation` is intentionally lightweight and educational in scope, focusing on a minimal set of abstractions—data contracts, validation results, and contract comparison—to support small projects, teaching, and CI-friendly workflows. Unlike production-grade tools, this package prioritizes clarity and minimal abstractions over completeness.
 
 
 ## Get started
 
-You can install this package into your preferred Python environment using pip:
+You can install this package locally into your preferred Python environment using pip:
 
-    $ pip install data_validation
+    $ pip install -e .
 
 ### Basic usage
 
@@ -41,7 +44,8 @@ new data against it.
 
 ```python
     import pandas as pd
-    from data_validation import infer_contract, validate_contract
+    from pyos_data_validation.infer_contract import infer_contract
+    from pyos_data_validation.validate_contract import validate_contract
 
     # example data
     df = pd.DataFrame({

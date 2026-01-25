@@ -66,7 +66,7 @@ def compare_contracts(contract_a, contract_b):
     >>> report.missingness_changes
     {'age': (0.05, 0.20)}
     """
-    from data_validation.types import ColumnRule, Contract, DriftReport
+    from pyos_data_validation.types import ColumnRule, Contract, DriftReport
 
     if not isinstance(contract_a, Contract) or not isinstance(contract_b, Contract):
         raise TypeError("contract_a and contract_b must be Contract instances")
@@ -74,11 +74,15 @@ def compare_contracts(contract_a, contract_b):
     def validate_contract(contract):
         for column, rule in contract.columns.items():
             if not isinstance(rule, ColumnRule):
-                raise TypeError(f"Column rule for {column} must be a ColumnRule instance")
+                raise TypeError(
+                    f"Column rule for {column} must be a ColumnRule instance"
+                )
             if not isinstance(rule.max_missing_frac, (int, float)):
                 raise ValueError(f"max_missing_frac for {column} must be numeric")
             if rule.max_missing_frac < 0 or rule.max_missing_frac > 1:
-                raise ValueError(f"max_missing_frac for {column} must be between 0 and 1")
+                raise ValueError(
+                    f"max_missing_frac for {column} must be between 0 and 1"
+                )
             if rule.min_value is not None and rule.max_value is not None:
                 if rule.min_value > rule.max_value:
                     raise ValueError(f"min_value cannot exceed max_value for {column}")
@@ -105,14 +109,20 @@ def compare_contracts(contract_a, contract_b):
             dtype_changes[column] = (rule_a.dtype, rule_b.dtype)
 
         if rule_a.dtype == rule_b.dtype:
-            if rule_a.min_value != rule_b.min_value or rule_a.max_value != rule_b.max_value:
+            if (
+                rule_a.min_value != rule_b.min_value
+                or rule_a.max_value != rule_b.max_value
+            ):
                 range_changes.add(column)
 
             if rule_a.allowed_values != rule_b.allowed_values:
                 category_changes.add(column)
 
         if rule_a.max_missing_frac != rule_b.max_missing_frac:
-            missingness_changes[column] = (rule_a.max_missing_frac, rule_b.max_missing_frac)
+            missingness_changes[column] = (
+                rule_a.max_missing_frac,
+                rule_b.max_missing_frac,
+            )
 
     return DriftReport(
         added_columns=added_columns,
