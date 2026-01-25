@@ -2,8 +2,11 @@
 
 |        |        |
 |--------|--------|
-| Package | [![Latest PyPI Version](https://img.shields.io/pypi/v/pyos_data_validation.svg)](https://pypi.org/project/pyos_data_validation/) [![Supported Python Versions](https://img.shields.io/pypi/pyversions/pyos_data_validation.svg)](https://pypi.org/project/pyos_data_validation/)  |
+| Package | [![Latest PyPI Version](https://img.shields.io/pypi/v/pyos_data_validation.svg)](https://pypi.org/project/pyos_data_validation/) [![Supported Python Versions](https://img.shields.io/pypi/pyversions/pyos_data_validation.svg)](https://pypi.org/project/pyos_data_validation/) |
+| CI / Release | [![deploy-test-pypi](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml) |
 | Meta   | [![Code of Conduct](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md) |
+
+
 
 
 `pyos_data_validation` is a lightweight Python package for defining, validating, and comparing **data contracts** for tabular datasets. It enables data scientists to formalize assumptions about their data—such as schema, missingness constraints, numeric ranges, and categorical domains—and to automatically validate new datasets against those expectations. The package supports reproducible workflows and CI-friendly automation by producing structured validation outputs and clear, actionable error messages suitable for use in unit tests and GitHub Actions.
