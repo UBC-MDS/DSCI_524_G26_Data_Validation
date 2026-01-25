@@ -5,6 +5,7 @@
 | Package | [![Latest PyPI Version](https://img.shields.io/pypi/v/pyos_data_validation.svg)](https://pypi.org/project/pyos_data_validation/) [![Supported Python Versions](https://img.shields.io/pypi/pyversions/pyos_data_validation.svg)](https://pypi.org/project/pyos_data_validation/) |
 | CI / Release | [![deploy-test-pypi](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml) |
 | Meta   | [![Code of Conduct](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md) |
+| Documentation | [View Full Documentation](https://ubc-mds.github.io/DSCI_524_G26_Data_Validation/) |
 
 
 
@@ -22,7 +23,7 @@
   Validates a DataFrame against a `Contract` by checking for missing or extra columns, dtype mismatches, missingness violations, out-of-range numeric values, and unseen categorical levels. Returns a structured `ValidationResult` containing overall pass/fail status along with per-column errors and warnings.
 
 - **`compare_contracts(contract_a, contract_b) -> DriftReport`**  
-  Compares two contracts (for example, a “training” contract versus a “latest” contract) to identify schema drift (added or removed columns, dtype changes) and distribution drift (numeric range shifts or categorical churn). Produces a `DriftReport` summarizing what changed and the severity of those changes.
+  Compares two contracts (for example, a "training" contract versus a "latest" contract) to identify schema drift (added or removed columns, dtype changes) and distribution drift (numeric range shifts or categorical churn). Produces a `DriftReport` summarizing what changed and the severity of those changes.
 
 - **`summarize_violations(result, *, top_k=5, weights=None) -> Summary`**  
   Converts a `ValidationResult` into an actionable summary by ranking columns by severity, grouping issues by type (schema, missingness, or distribution), and highlighting the most critical failures to address first. This supports concise reporting in CI logs and pull requests without being limited to simple formatting.
@@ -41,7 +42,6 @@ You can install this package locally into your preferred Python environment usin
 
 A typical workflow is to infer a contract from an existing dataset and then validate
 new data against it.
-
 ```python
     import pandas as pd
     from pyos_data_validation.infer_contract import infer_contract
@@ -67,6 +67,61 @@ new data against it.
 The validation result contains a boolean pass/fail flag and a list of issues describing
 any contract violations. This makes the package suitable for lightweight data checks
 and CI-friendly workflows.
+
+
+## Developer Guide
+
+This section is for contributors and developers working on the `pyos_data_validation` package.
+
+### Setting up the development environment
+
+Clone the repository:
+
+    $ git clone https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation.git
+    $ cd DSCI_524_G26_Data_Validation
+
+Create and activate the conda environment:
+
+    $ conda env create -f environment.yml
+    $ conda activate pyos_data_validation
+
+Install the package in editable mode with development dependencies:
+
+    $ pip install -e ".[dev,tests]"
+
+### Running tests
+
+Run the test suite with coverage:
+
+    $ pytest --cov=pyos_data_validation --cov-report=term --cov-branch
+
+Run tests for a specific module:
+
+    $ pytest tests/unit/test_infer_contract.py -v
+
+### Code quality checks
+
+Check code style with ruff:
+
+    $ ruff check .
+
+Format code with ruff:
+
+    $ ruff format .
+
+### Building documentation
+
+Build the documentation locally using Quarto:
+
+    $ quarto render
+
+The built documentation will be available in the `_site/` directory. Open `_site/index.html` in your browser to view it.
+
+### Deploying documentation
+
+Documentation is automatically built and deployed to GitHub Pages when changes are pushed to the `main` branch. The deployment is handled by the `.github/workflows/docs-publish.yml` workflow.
+
+View the live documentation at: https://ubc-mds.github.io/DSCI_524_G26_Data_Validation/
 
 
 ## Contributors
