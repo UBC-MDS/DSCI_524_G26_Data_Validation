@@ -1,0 +1,58 @@
+# validate_contract { #data_validation.validate_contract }
+
+`validate_contract`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [validate_contract](#data_validation.validate_contract.validate_contract) | Validate a pandas DataFrame against a predefined data contract. |
+
+### validate_contract { #data_validation.validate_contract.validate_contract }
+
+```python
+validate_contract.validate_contract(df, contract, strict=True)
+```
+
+Validate a pandas DataFrame against a predefined data contract.
+
+This function validates an input DataFrame by comparing it against a
+contract that defines expected columns, data types, missingness
+thresholds, numeric value limits, and allowed categorical values.
+All columns defined in the contract are treated as required. Validation
+results are returned as a collection of structured issues describing
+any detected violations.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type             | Description                                                                                                                                                                                                                                                      | Default    |
+|----------|------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| df       | pandas.DataFrame | The DataFrame to be validated.                                                                                                                                                                                                                                   | _required_ |
+| contract | Contract         | A data contract defining the expected columns and validation rules for each column, including: - expected data type (as a string), - maximum allowed fraction of missing values, - minimum and maximum values for numeric columns, - allowed categorical values. | _required_ |
+| strict   | bool             | If True, the presence of extra columns in the DataFrame that are not defined in the contract is reported as validation issues. If False, extra columns are ignored.                                                                                              | `True`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                                                                                                                   |
+|--------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        | ValidationResult | An object containing: - a boolean flag (`ok`) indicating whether validation succeeded, - a list of Issue objects describing all detected validation problems. |
+
+#### Notes {.doc-section .doc-section-notes}
+
+The function performs the following checks:
+- Missing columns defined in the contract
+- Unexpected extra columns (when strict mode is enabled)
+- Data type mismatches based on dtype string comparison
+- Missingness violations based on maximum allowed missing fraction
+- Minimum and maximum value violations for numeric columns
+- Invalid or unseen categorical values
+
+#### Examples {.doc-section .doc-section-examples}
+
+```python
+>>> result = validate_contract(df, contract)
+>>> result.ok
+True
+```

@@ -45,7 +45,6 @@ format:
 quartodoc:
   package: data_validation
   dir: reference
-
   sections:
     - title: Core functions
       contents:
@@ -53,4 +52,3 @@ quartodoc:
         - validate_contract
         - compare_contracts
         - summarize_violations
-        - validate_and_fail

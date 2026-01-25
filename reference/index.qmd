@@ -1,0 +1,10 @@
+# Function reference {.doc .doc-index}
+
+## Core functions
+
+| | |
+| --- | --- |
+| [infer_contract](infer_contract.qmd#data_validation.infer_contract) |  |
+| [validate_contract](validate_contract.qmd#data_validation.validate_contract) |  |
+| [compare_contracts](compare_contracts.qmd#data_validation.compare_contracts) |  |
+| [summarize_violations](summarize_violations.qmd#data_validation.summarize_violations) |  |

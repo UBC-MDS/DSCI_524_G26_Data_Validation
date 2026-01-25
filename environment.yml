@@ -2,7 +2,7 @@ name: pyos_data_validation
 channels:
   - conda-forge
 dependencies:
-  - python=3.14.2 
+  - python=3.12 
   - hatch=1.16.2
   - copier=9.11.0
   - pytest=8.0.0
