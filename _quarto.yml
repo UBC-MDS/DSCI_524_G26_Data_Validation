@@ -1,0 +1,46 @@
+# ------------------------------------------------------------------------------
+# Quarto Project Configuration
+# ------------------------------------------------------------------------------
+
+project:
+  type: website   # website means a docs site
+
+# Where the rendered HTML will go (GitHub Pages setup)
+# This outputs into the docs/ folder usable by GitHub Pages
+output-dir: docs
+
+# ------------------------------------------------------------------------------
+# Quartodoc API docs configuration
+# ------------------------------------------------------------------------------
+
+quartodoc:
+  # Python package to document
+  package: data_validation
+
+  # Output directory for API docs
+  # This will generate API docs into `reference/`
+  dir: reference
+
+  # Sections defines how the API documentation is organized
+  sections:
+    # You may add more sections here for modules or categories
+    - title: Core functions
+      contents:
+        - infer_contract
+        - validate_contract
+        - compare_contracts
+        - summarize_violations
+        - validate_and_fail
+
+# ------------------------------------------------------------------------------
+# Sidebar navigation customization (optional but recommended)
+# ------------------------------------------------------------------------------
+
+website:
+  sidebar:
+    contents:
+      - text: "Home"
+        href: index.qmd
+      - text: "API Reference"
+        contents:
+          - reference/index.qmd
