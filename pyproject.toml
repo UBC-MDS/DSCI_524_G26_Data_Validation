@@ -58,6 +58,7 @@ Download = "https://pypi.org/project/data_validation/#files"
 dev = [
     "hatch",
     "pre-commit",
+    "ruff"
 ]
 
 docs = [
