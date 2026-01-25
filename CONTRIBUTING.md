@@ -19,7 +19,7 @@ You can contribute in many ways, for example:
 
 ### Report Bugs
 
-Report bugs at https://github.com/EduardoRasanmar/data_validation/issues.
+Report bugs at https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/issues.
 
 **If you are reporting a bug, please follow the template guidelines. The more
 detailed your report, the easier and thus faster we can help you.**
@@ -43,16 +43,16 @@ happy for any support that they can get.
 
 ### Write Documentation
 
-data_validation could always use more documentation, whether as
+pyos_data_validation could always use more documentation, whether as
 part of the official documentation, in docstrings, or even on the web in blog
 posts, articles, and such. Just
-[open an issue](https://github.com/EduardoRasanmar/data_validation/issues)
+[open an issue](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/issues)
 to let us know what you will be working on so that we can provide you with guidance.
 
 ### Submit Feedback
 
 The best way to send feedback is to file an issue at
-https://github.com/EduardoRasanmar/data_validation/issues. If your feedback fits the format of one of
+https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/issues. If your feedback fits the format of one of
 the issue templates, please use that. Remember that this is a volunteer-driven
 project and everybody has limited time.
 
@@ -75,7 +75,7 @@ Follow these steps to set up the project locally and start contributing.
 
     ```shell
     conda env create -f environment.yml
-    conda activate data_validation
+    conda activate pyos_data_validation
     ```
 
 4. Create a new branch from the default branch (`main`).  

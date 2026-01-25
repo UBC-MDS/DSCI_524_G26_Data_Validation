@@ -45,11 +45,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/EduardoRasanmar/data_validation"
-"Source Code" = "https://github.com/EduardoRasanmar/data_validation"
-"Bug Tracker" = "https://github.com/EduardoRasanmar/data_validation/issues"
-Documentation = "https://github.com/EduardoRasanmar/data_validation/blob/main/README.md"
-Download = "https://pypi.org/project/data_validation/#files"
+Homepage = "https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation"
+"Source Code" = "https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation"
+"Bug Tracker" = "https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/issues"
+Documentation = "https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/blob/main/README.md"
+Download = "https://pypi.org/project/pyos_data_validation/#files"
 
 [project.optional-dependencies]
 # The groups below should be in the [development-groups] table
