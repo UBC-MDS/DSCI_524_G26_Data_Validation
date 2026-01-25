@@ -30,7 +30,8 @@ def test_infer_contract_creates_rule_per_column():
 
     assert set(contract.columns.keys()) == {"age", "height"}
 
-    # def test_infer_contract_stores_columnrule_objects():
+# Test contract stores rules per column in the df
+def test_infer_contract_stores_columnrule_objects():
     df = pd.DataFrame({"age": [20, 30, 40], "height": [170, 180, 175]})
 
     contract = infer_contract(df)
@@ -41,8 +42,6 @@ def test_infer_contract_creates_rule_per_column():
 
 # Edge tests developed with support of LLM to ensure functionality
 # Edge test: missingness is a valid fraction
-
-
 def test_missing_fraction_between_zero_and_one():
     df = pd.DataFrame({"a": [1, None, 3]})
     contract = infer_contract(df)
@@ -52,8 +51,6 @@ def test_missing_fraction_between_zero_and_one():
 
 
 # Edge test: numeric vs categorical handling
-
-
 def test_numeric_and_categorical_rules():
     df = pd.DataFrame({"num": [1, 2, 3], "cat": ["a", "b", "a"]})
 
@@ -63,3 +60,34 @@ def test_numeric_and_categorical_rules():
     assert contract.columns["num"].allowed_values is None
 
     assert contract.columns["cat"].allowed_values == {"a", "b"}
+
+#MIlestone 4 Functions 
+
+# 1) Empty DataFrame should produce an empty contract.columns mapping
+def test_infer_contract_empty_dataframe_returns_empty_columns():
+    df = pd.DataFrame()
+    contract = infer_contract(df)
+    assert contract.columns == {}
+
+# 2) Missingness fraction should be exact for a known pattern
+def test_missing_fraction_exact_value():
+    df = pd.DataFrame({"a": [1, None, None, 4]})  # 2 missing out of 4 = 0.5
+    contract = infer_contract(df)
+    assert contract.columns["a"].max_missing_frac == 0.5
+
+# 3) All-missing numeric column should not crash; missingness should be 1.0
+def test_all_missing_column_missingness_is_one():
+    df = pd.DataFrame({"a": [None, None, None]})
+    contract = infer_contract(df)
+    assert contract.columns["a"].max_missing_frac == 1.0
+
+# 4) Boolean column should be treated like categorical-like for allowed_values
+def test_boolean_column_allowed_values():
+    df = pd.DataFrame({"flag": [True, False, True]})
+    contract = infer_contract(df)
+    assert contract.columns["flag"].allowed_values == {"True", "False"}
+
+
+
+
+
