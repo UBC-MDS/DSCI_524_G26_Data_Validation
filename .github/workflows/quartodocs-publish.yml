@@ -2,7 +2,7 @@ name: 03b-quartodoc-publish
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ documentation, main ]
   workflow_dispatch:
 
 jobs:
