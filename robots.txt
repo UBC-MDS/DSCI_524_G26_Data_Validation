@@ -1,0 +1,1 @@
+Sitemap: https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/sitemap.xml
