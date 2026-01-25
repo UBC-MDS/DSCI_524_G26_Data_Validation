@@ -11,13 +11,19 @@ project:
 # ------------------------------------------------------------------------------
 
 website:
-  title: "data_validation"
+  title: "pyos_data_validation"
   navbar:
     left:
       - text: "Home"
         href: index.qmd
       - text: "API Reference"
         href: reference/index.qmd
+      - text: "Contributing"
+        href: CONTRIBUTING.md
+      - text: "Development"
+        href: DEVELOPMENT.md
+      - text: "Code of Conduct"
+        href: CODE_OF_CONDUCT.md
       - text: "GitHub"
         href: https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation
 
@@ -43,7 +49,7 @@ format:
 # ------------------------------------------------------------------------------
 
 quartodoc:
-  package: data_validation
+  package: pyos_data_validation
   dir: reference
 
   sections:
@@ -53,3 +59,12 @@ quartodoc:
         - validate_contract
         - compare_contracts
         - summarize_violations
+    - title: Types
+      contents:
+        - types.ColumnRule
+        - types.Contract
+        - types.Issue
+        - types.ValidationResult
+        - types.DriftReport
+        - types.Summary
+        - types.ContractViolationError
