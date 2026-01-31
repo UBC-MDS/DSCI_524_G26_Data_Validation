@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>data_validation – pyos_data_validation</title>
+<title>pyos_data_validation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -206,14 +206,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#example-usage" id="toc-example-usage" class="nav-link" data-scroll-target="#example-usage">Example Usage</a>
+  <li><a href="#quick-start" id="toc-quick-start" class="nav-link" data-scroll-target="#quick-start">Quick Start</a>
   <ul class="collapse">
-  <li><a href="#inferring-a-contract" id="toc-inferring-a-contract" class="nav-link" data-scroll-target="#inferring-a-contract">Inferring a contract</a></li>
-  <li><a href="#validating-data" id="toc-validating-data" class="nav-link" data-scroll-target="#validating-data">Validating data</a></li>
-  <li><a href="#comparing-contracts" id="toc-comparing-contracts" class="nav-link" data-scroll-target="#comparing-contracts">Comparing Contracts</a></li>
-  <li><a href="#summarizing-violations" id="toc-summarizing-violations" class="nav-link" data-scroll-target="#summarizing-violations">Summarizing violations</a></li>
+  <li><a href="#validating-data" id="toc-validating-data" class="nav-link" data-scroll-target="#validating-data">Validating Data</a></li>
+  <li><a href="#summarizing-violations" id="toc-summarizing-violations" class="nav-link" data-scroll-target="#summarizing-violations">Summarizing Violations</a></li>
+  <li><a href="#comparing-contracts-drift-detection" id="toc-comparing-contracts-drift-detection" class="nav-link" data-scroll-target="#comparing-contracts-drift-detection">Comparing Contracts (Drift Detection)</a></li>
   </ul></li>
-  <li><a href="#api-reference" id="toc-api-reference" class="nav-link" data-scroll-target="#api-reference">API Reference</a></li>
+  <li><a href="#detailed-documentation" id="toc-detailed-documentation" class="nav-link" data-scroll-target="#detailed-documentation">Detailed Documentation</a></li>
+  <li><a href="#use-cases" id="toc-use-cases" class="nav-link" data-scroll-target="#use-cases">Use Cases</a>
+  <ul class="collapse">
+  <li><a href="#cicd-integration" id="toc-cicd-integration" class="nav-link" data-scroll-target="#cicd-integration">CI/CD Integration</a></li>
+  <li><a href="#data-pipeline-monitoring" id="toc-data-pipeline-monitoring" class="nav-link" data-scroll-target="#data-pipeline-monitoring">Data Pipeline Monitoring</a></li>
+  </ul></li>
+  <li><a href="#contributing" id="toc-contributing" class="nav-link" data-scroll-target="#contributing">Contributing</a></li>
+  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
   </ul>
 </nav>
     </div>
@@ -222,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">data_validation</h1>
+<h1 class="title">pyos_data_validation</h1>
 </div>
 
 
@@ -241,70 +247,175 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p><code>data_validation</code> is a lightweight Python package for defining, validating, and comparing <strong>data contracts</strong> for tabular datasets. A data contract captures assumptions about a dataset’s schema, data types, missingness, numeric ranges, and categorical values.</p>
+<p><code>pyos_data_validation</code> is a lightweight Python package for defining, validating, and comparing <strong>data contracts</strong> for tabular datasets. A data contract captures assumptions about a dataset’s schema, data types, missingness, numeric ranges, and categorical values.</p>
 <p>The package supports a simple, reproducible workflow:</p>
 <ol type="1">
-<li>Infer a contract from a reference dataset<br>
+<li><strong>Infer a contract</strong> from a reference dataset<br>
 </li>
-<li>Validate new data against the contract<br>
+<li><strong>Validate new data</strong> against the contract<br>
 </li>
-<li>Compare contracts to detect schema or distribution drift<br>
+<li><strong>Compare contracts</strong> to detect schema or distribution drift<br>
 </li>
-<li>Summarize validation failures for debugging and CI use</li>
+<li><strong>Summarize validation failures</strong> for debugging and CI use</li>
 </ol>
 <hr>
 </section>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p>Install the package from source:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation.git</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> DSCI_524_G26_Data_Validation</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Install from TestPyPI:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-i</span> https://test.pypi.org/simple/ pyos-data-validation</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or install from source for development:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation.git</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> DSCI_524_G26_Data_Validation</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
-<section id="example-usage" class="level2">
-<h2 class="anchored" data-anchor-id="example-usage">Example Usage</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> data_validation <span class="im">import</span> (</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    infer_contract,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    validate_contract,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    compare_contracts,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    summarize_violations,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    validate_and_fail,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"age"</span>: [<span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">35</span>],</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"salary"</span>: [<span class="dv">50000</span>, <span class="dv">75000</span>, <span class="dv">62000</span>],</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"department"</span>: [<span class="st">"HR"</span>, <span class="st">"Engineering"</span>, <span class="st">"HR"</span>]</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="inferring-a-contract" class="level3">
-<h3 class="anchored" data-anchor-id="inferring-a-contract">Inferring a contract</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>contract <span class="op">=</span> infer_contract(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This infers expected column types, missingness constraints, numeric ranges, and categorical domains from the data.</p>
-</section>
+<section id="quick-start" class="level2">
+<h2 class="anchored" data-anchor-id="quick-start">Quick Start</h2>
+<p>Here’s a complete workflow demonstrating all four core functions:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyos_data_validation <span class="im">import</span> (</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    infer_contract,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    validate_contract,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    compare_contracts,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    summarize_violations,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Create training data</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>training_data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"age"</span>: [<span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">35</span>, <span class="dv">28</span>, <span class="dv">45</span>],</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"salary"</span>: [<span class="dv">50000</span>, <span class="dv">75000</span>, <span class="dv">62000</span>, <span class="dv">55000</span>, <span class="dv">80000</span>],</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"department"</span>: [<span class="st">"HR"</span>, <span class="st">"Engineering"</span>, <span class="st">"HR"</span>, <span class="st">"Sales"</span>, <span class="st">"Engineering"</span>]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Infer a contract from the training data</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>contract <span class="op">=</span> infer_contract(training_data)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Contract inferred successfully!"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Columns in contract: </span><span class="sc">{</span><span class="bu">list</span>(contract.columns.keys())<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="validating-data" class="level3">
-<h3 class="anchored" data-anchor-id="validating-data">Validating data</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> validate_contract(df, contract)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>result.passed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This checks whether the data conforms to the contract and returns a structured validation result containing errors and warnings.</p>
-</section>
-<section id="comparing-contracts" class="level3">
-<h3 class="anchored" data-anchor-id="comparing-contracts">Comparing Contracts</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>new_contract <span class="op">=</span> infer_contract(df)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>drift_report <span class="op">=</span> compare_contracts(contract, new_contract)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This identifies schema or distribution drift between two data contracts.</p>
+<h3 class="anchored" data-anchor-id="validating-data">Validating Data</h3>
+<p>Validate new data against the contract:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valid data - passes all checks</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>valid_data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"age"</span>: [<span class="dv">30</span>, <span class="dv">42</span>],</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"salary"</span>: [<span class="dv">58000</span>, <span class="dv">72000</span>],</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"department"</span>: [<span class="st">"HR"</span>, <span class="st">"Sales"</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> validate_contract(valid_data, contract)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Validation passed: </span><span class="sc">{</span>result<span class="sc">.</span>ok<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Issues found: </span><span class="sc">{</span><span class="bu">len</span>(result.issues)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now let’s see what happens with invalid data:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Invalid data - multiple violations</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>invalid_data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"age"</span>: [<span class="dv">30</span>, <span class="dv">55</span>, <span class="dv">22</span>],  <span class="co"># 55 and 22 outside range</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"salary"</span>: [<span class="dv">58000</span>, <span class="dv">72000</span>, <span class="dv">45000</span>],  <span class="co"># 45000 below minimum</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"department"</span>: [<span class="st">"HR"</span>, <span class="st">"Sales"</span>, <span class="st">"Marketing"</span>],  <span class="co"># Marketing not in contract</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bonus"</span>: [<span class="dv">5000</span>, <span class="dv">8000</span>, <span class="dv">3000</span>]  <span class="co"># Extra column</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> validate_contract(invalid_data, contract)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Validation passed: </span><span class="sc">{</span>result<span class="sc">.</span>ok<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Issues found: </span><span class="sc">{</span><span class="bu">len</span>(result.issues)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first few issues</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> issue <span class="kw">in</span> result.issues[:<span class="dv">3</span>]:</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  - </span><span class="sc">{</span>issue<span class="sc">.</span>column<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>issue<span class="sc">.</span>kind<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="summarizing-violations" class="level3">
-<h3 class="anchored" data-anchor-id="summarizing-violations">Summarizing violations</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> summarize_violations(result)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This produces a concise summary of the most important validation failures.</p>
+<h3 class="anchored" data-anchor-id="summarizing-violations">Summarizing Violations</h3>
+<p>Get an actionable summary of the most critical issues:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> summarize_violations(result, top_k<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Overall status: </span><span class="sc">{</span><span class="st">'PASS'</span> <span class="cf">if</span> summary<span class="sc">.</span>ok <span class="cf">else</span> <span class="st">'FAIL'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Top </span><span class="sc">{</span><span class="bu">len</span>(summary.top_issues)<span class="sc">}</span><span class="ss"> critical issues:"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> issue <span class="kw">in</span> summary.top_issues:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  - </span><span class="sc">{</span>issue<span class="sc">.</span>column<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>issue<span class="sc">.</span>kind<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Issue counts by type:"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> kind, count <span class="kw">in</span> summary.counts_by_kind.items():</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>kind<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>count<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="comparing-contracts-drift-detection" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-contracts-drift-detection">Comparing Contracts (Drift Detection)</h3>
+<p>Detect changes between data versions:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># New data with different characteristics</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>new_data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"age"</span>: [<span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>],  <span class="co"># Expanded age range</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"salary"</span>: [<span class="dv">50000</span>, <span class="dv">75000</span>, <span class="dv">90000</span>, <span class="dv">110000</span>],  <span class="co"># Higher salaries</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"department"</span>: [<span class="st">"HR"</span>, <span class="st">"Engineering"</span>, <span class="st">"Finance"</span>, <span class="st">"Engineering"</span>],  <span class="co"># New dept</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"location"</span>: [<span class="st">"NYC"</span>, <span class="st">"SF"</span>, <span class="st">"NYC"</span>, <span class="st">"Austin"</span>]  <span class="co"># New column</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>new_contract <span class="op">=</span> infer_contract(new_data)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>drift_report <span class="op">=</span> compare_contracts(contract, new_contract)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Schema drift detected: </span><span class="sc">{</span>drift_report<span class="sc">.</span>has_schema_drift<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Distribution drift detected: </span><span class="sc">{</span>drift_report<span class="sc">.</span>has_distribution_drift<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> drift_report.added_columns:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"New columns: </span><span class="sc">{</span>drift_report<span class="sc">.</span>added_columns<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> drift_report.distribution_changes:</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Distribution changes in: </span><span class="sc">{</span><span class="bu">list</span>(drift_report.distribution_changes.keys())<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
 </section>
 </section>
-<section id="api-reference" class="level2">
-<h2 class="anchored" data-anchor-id="api-reference">API Reference</h2>
-<p>See the <a href="./reference/index.html">API Reference</a> for detailed documentation of all functions and objects.</p>
+<section id="detailed-documentation" class="level2">
+<h2 class="anchored" data-anchor-id="detailed-documentation">Detailed Documentation</h2>
+<p>For complete documentation of each function including all parameters, return types, and additional examples:</p>
+<ul>
+<li><strong><a href="./reference/infer_contract.html">infer_contract</a></strong> - Learn data contracts from DataFrames</li>
+<li><strong><a href="./reference/validate_contract.html">validate_contract</a></strong> - Check data against contracts<br>
+</li>
+<li><strong><a href="./reference/compare_contracts.html">compare_contracts</a></strong> - Detect schema and distribution drift</li>
+<li><strong><a href="./reference/summarize_violations.html">summarize_violations</a></strong> - Prioritize validation failures</li>
+</ul>
+<p>See the complete <a href="./reference/index.html">API Reference</a> for all functions and types.</p>
+<hr>
+</section>
+<section id="use-cases" class="level2">
+<h2 class="anchored" data-anchor-id="use-cases">Use Cases</h2>
+<section id="cicd-integration" class="level3">
+<h3 class="anchored" data-anchor-id="cicd-integration">CI/CD Integration</h3>
+<p>Use in automated testing:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_data_quality():</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    expected_contract <span class="op">=</span> infer_contract(reference_data)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> validate_contract(new_data, expected_contract)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> result.ok:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        summary <span class="op">=</span> summarize_violations(result)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">AssertionError</span>(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Data validation failed with </span><span class="sc">{</span><span class="bu">len</span>(summary.top_issues)<span class="sc">}</span><span class="ss"> critical issues"</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="data-pipeline-monitoring" class="level3">
+<h3 class="anchored" data-anchor-id="data-pipeline-monitoring">Data Pipeline Monitoring</h3>
+<p>Monitor data drift over time:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>baseline_contract <span class="op">=</span> infer_contract(baseline_data)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> batch <span class="kw">in</span> data_batches:</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    current_contract <span class="op">=</span> infer_contract(batch)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    drift <span class="op">=</span> compare_contracts(baseline_contract, current_contract)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> drift.has_schema_drift:</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        alert_team(<span class="st">"Schema drift detected!"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> drift.has_distribution_drift:</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        log_drift_metrics(drift.distribution_changes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="contributing" class="level2">
+<h2 class="anchored" data-anchor-id="contributing">Contributing</h2>
+<p>We welcome contributions! Check out:</p>
+<ul>
+<li><a href="./CONTRIBUTING.html">Contributing Guide</a></li>
+<li><a href="./DEVELOPMENT.html">Development Guide</a></li>
+<li><a href="./CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+</ul>
+</section>
+<section id="license" class="level2">
+<h2 class="anchored" data-anchor-id="license">License</h2>
+<p>MIT License - see <a href="https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/blob/main/LICENSE">LICENSE</a> for details.</p>
 
 
 </section>
