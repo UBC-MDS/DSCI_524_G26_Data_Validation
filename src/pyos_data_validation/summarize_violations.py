@@ -76,7 +76,7 @@ def summarize_violations(
     See Also
     --------
     validate_contract : Validate a DataFrame against a contract.
-    validate_and_fail : Validate and raise an exception on failure.
+    infer_contract : Infer a contract from a DataFrame.
 
     Notes
     -----
@@ -96,55 +96,97 @@ def summarize_violations(
     --------
     Basic usage with default weights:
 
-    >>> from pyos_data_validation import validate_contract, summarize_violations
-    >>> result = validate_contract(df, contract)
+    >>> import pandas as pd
+    >>> from pyos_data_validation import infer_contract, validate_contract, summarize_violations
+    >>> 
+    >>> # Create training data to establish contract
+    >>> training_df = pd.DataFrame({
+    ...     "age": [25, 40, 35],
+    ...     "salary": [50000, 75000, 62000],
+    ...     "department": ["HR", "Engineering", "Sales"]
+    ... })
+    >>> 
+    >>> # Infer contract from training data
+    >>> contract = infer_contract(training_df)
+    >>> 
+    >>> # Create test data with violations
+    >>> test_df = pd.DataFrame({
+    ...     "age": [30, 55, 22],  # 55 and 22 outside expected range
+    ...     "salary": [58000, 72000, 45000],  # 45000 below minimum
+    ...     "department": ["HR", "Sales", "Marketing"],  # Marketing not in contract
+    ...     "bonus": [5000, 8000, 3000]  # Extra column not in contract
+    ... })
+    >>> 
+    >>> # Validate and get issues
+    >>> result = validate_contract(test_df, contract)
     >>> summary = summarize_violations(result, top_k=3)
+    >>> 
+    >>> print(f"Validation passed: {summary.ok}")
+    Validation passed: False
     >>> print(f"Found {len(summary.top_issues)} critical issues")
     Found 3 critical issues
+    >>> 
+    >>> # Show top issues by severity
     >>> for issue in summary.top_issues:
-    ...     if issue.column:
-    ...         print(f"  - {issue.column}: {issue.message}")
-    ...     else:
-    ...         print(f"  - {issue.message}")
-      - age: value out of expected range
-      - status: unknown category 'inactive'
-      - salary: 12% missing values exceeds limit
+    ...     print(f"  - {issue.column}: {issue.kind}")
+      - bonus: extra_column
+      - age: range
+      - age: range
 
-    Using counts for quick overview:
+    Using counts for quick overview of issue types:
 
     >>> print(summary.counts_by_kind)
-    {'range': 3, 'dtype': 2, 'missingness': 1}
+    {'extra_column': 1, 'range': 3, 'category': 1}
+    >>> 
+    >>> # Check for critical schema issues
     >>> if summary.counts_by_kind.get('missing_column', 0) > 0:
     ...     print("Critical: Missing required columns!")
+    >>> if summary.counts_by_kind.get('extra_column', 0) > 0:
+    ...     print("Warning: Extra columns detected")
+    Warning: Extra columns detected
 
     Custom weights to prioritize specific issue types:
 
-    >>> # Prioritize range violations
-    >>> summary = summarize_violations(
+    >>> # Make range violations highest priority
+    >>> custom_summary = summarize_violations(
     ...     result,
     ...     top_k=5,
     ...     weights={
     ...         'missing_column': 10,
-    ...         'dtype': 10,
-    ...         'range': 20,  # Highest priority
+    ...         'extra_column': 8,
+    ...         'dtype': 7,
+    ...         'range': 20,  # Highest priority!
     ...         'category': 5,
-    ...         'missingness': 5
+    ...         'missingness': 3
     ...     }
     ... )
-    >>> summary.top_issues[0].kind
-    'range'
+    >>> 
+    >>> # Now range issues come first
+    >>> print(f"Top issue type: {custom_summary.top_issues[0].kind}")
+    Top issue type: range
+    >>> print(f"Top issue column: {custom_summary.top_issues[0].column}")
+    Top issue column: age
 
     Handling validation success (no issues):
 
-    >>> result = ValidationResult(ok=True, issues=[])
+    >>> # Valid data that passes all checks
+    >>> valid_df = pd.DataFrame({
+    ...     "age": [30, 42],
+    ...     "salary": [58000, 72000],
+    ...     "department": ["HR", "Sales"]
+    ... })
+    >>> 
+    >>> result = validate_contract(valid_df, contract)
     >>> summary = summarize_violations(result)
-    >>> summary.ok
-    True
-    >>> len(summary.top_issues)
-    0
-    >>> summary.counts_by_kind
-    {}
+    >>> 
+    >>> print(f"Validation passed: {summary.ok}")
+    Validation passed: True
+    >>> print(f"Issues found: {len(summary.top_issues)}")
+    Issues found: 0
+    >>> print(f"Counts: {summary.counts_by_kind}")
+    Counts: {}
     """
+
     # Define default weights AT THE VERY START
     DEFAULT_WEIGHTS = {
         "missing_column": 10,
