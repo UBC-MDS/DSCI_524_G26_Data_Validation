@@ -49,7 +49,7 @@ Homepage = "https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation"
 "Source Code" = "https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation"
 "Bug Tracker" = "https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/issues"
 Documentation = "https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/blob/main/README.md"
-Download = "https://pypi.org/project/pyos_data_validation/#files"
+Download = "https://test.pypi.org/project/pyos-data-validation/"
 
 [project.optional-dependencies]
 # The groups below should be in the [development-groups] table
