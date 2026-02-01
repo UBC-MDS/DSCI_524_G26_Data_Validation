@@ -243,3 +243,8 @@ cython_debug/
 
 # Hatch-VCS
 _version.py
+
+/.quarto/
+
+# Hatch version file (auto-generated from git tags)
+src/pyos_data_validation/__version__.py
