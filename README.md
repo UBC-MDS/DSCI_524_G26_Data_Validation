@@ -670,4 +670,7 @@ View the live documentation at: https://ubc-mds.github.io/DSCI_524_G26_Data_Vali
 - [Full Documentation](https://ubc-mds.github.io/DSCI_524_G26_Data_Validation/)
 - [Issue Tracker](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/issues)
 - [Project Board](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/projects?query=is%3Aopen)
+- [Pandera](https://github.com/unionai-oss/pandera)
+- [Great Expectations](https://github.com/great-expectations/great_expectations)
+- [Pydantic](https://github.com/pydantic/pydantic)
 
