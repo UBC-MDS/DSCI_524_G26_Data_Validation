@@ -14,8 +14,8 @@
 ---
 
 ## Table of Contents
-- [Quick Start](#get-started)
 - [Function Reference](#function-reference)
+- [Quick Start](#get-started)
 - [Usage Examples](#usage-examples)
 - [Developer Guide](#developer-guide)
 - [Contributors](#contributors)
@@ -501,7 +501,7 @@ for kind, count in summary.counts_by_kind.items():
 
 `pyos_data_validation` is inspired by production-grade data validation frameworks but serves a different purpose:
 
-| Feature | pyos_data_validation | Pandera | Great Expectations | Pydantic |
+| Feature | pyos_data_validation | [Pandera](https://pandera.readthedocs.io/) | [Great Expectations](https://greatexpectations.io/) | [Pydantic](https://docs.pydantic.dev/) |
 |---------|---------------------|---------|-------------------|----------|
 | **Target Use Case** | Educational, lightweight validation | Production data validation | Enterprise data quality | API input validation |
 | **Learning Curve** | Low | Medium | High | Low-Medium |
@@ -520,9 +520,9 @@ for kind, count in summary.counts_by_kind.items():
 - When you need simple drift detection out of the box
 
 **When to use alternatives:**
-- **Pandera**: Production ML pipelines with complex validation rules and custom checks
-- **Great Expectations**: Enterprise data quality monitoring with extensive reporting and data docs
-- **Pydantic**: API request/response validation or configuration management with type safety
+- **[Pandera](https://pandera.readthedocs.io/)**: Production ML pipelines with complex validation rules and custom checks
+- **[Great Expectations](https://greatexpectations.io/)**: Enterprise data quality monitoring with extensive reporting and data docs
+- **[Pydantic](https://docs.pydantic.dev/)**: API request/response validation or configuration management with type safety
 
 ---
 
@@ -530,7 +530,9 @@ for kind, count in summary.counts_by_kind.items():
 
 You can install this package locally into your preferred Python environment using pip:
 
-    $ pip install -e .
+```bash
+    pip install -e .
+```
 
 ### Basic usage
 
@@ -574,20 +576,30 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation.git
+```
+
+Change the directory to the project:
+
+```bash
 cd DSCI_524_G26_Data_Validation
 ```
 
-Create and activate the conda environment:
+Create the conda environment:
 
 ```bash
 conda env create -f environment.yml
+```
+
+Activate the environment: 
+
+```bash
 conda activate pyos_data_validation
 ```
 
 Install the package in editable mode with development dependencies:
 
 ```bash
-pip install -e ".[dev,tests]"
+pip install -e ".[dev,tests,docs]"
 ```
 
 ### Running tests
@@ -670,4 +682,3 @@ View the live documentation at: https://ubc-mds.github.io/DSCI_524_G26_Data_Vali
 - [Full Documentation](https://ubc-mds.github.io/DSCI_524_G26_Data_Validation/)
 - [Issue Tracker](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/issues)
 - [Project Board](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/projects?query=is%3Aopen)
-

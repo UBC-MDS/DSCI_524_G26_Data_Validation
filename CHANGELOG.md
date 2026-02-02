@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved `DriftReport` to include missingness-related changes.
 - Updated documentation for `compare_contracts` with explicit drift definitions and directionality.
 - Renamed the package in documentation/metadata to `pyos_data_validation`.
+- Removed shell prompt and split commands inside README command snippets for easier copy/paste.
+- Standardized docstrings across public APIs (consistent Notes formatting, Raises sections).
+- Added hyperlinks to Pandera, Great Expectations, and Pydantic in README comparison section.
+- Added docs to the developer guid install list for quartodoc build to work.
 
 ### Tests
 - Added comprehensive unit tests for `compare_contracts`, covering schema drift, constraint drift, edge cases, and error handling.
