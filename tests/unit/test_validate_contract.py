@@ -178,8 +178,7 @@ def test_validate_contract():
     Drop into debugger on failure:
         $ pytest tests/test_validate_contract.py::test_validate_contract --pdb
     """
-    # Create the test contract that defines validation rules
-    # This contract expects 'age' (int, 0-100) and 'city' (Vancouver or Toronto)
+
     contract = Contract(
         name="test_contract",
         columns={
@@ -190,183 +189,38 @@ def test_validate_contract():
         },
     )
 
-    # ========================================================================
-    # Edge Case 1: Valid DataFrame (Success Path / Happy Path)
-    # ========================================================================
-    # Purpose: Verify that properly formatted data passes all validations
-    # Expected: No issues, result.ok = True
-    # 
-    # Test data contains:
-    #   - age: [25, 30] - Both within valid range [0, 100]
-    #   - city: ["Vancouver", "Toronto"] - Both in allowed values set
-    #   - No missing values in either column
-    #   - Correct data types (int64 for age, object for city)
-    
-    df_valid = pd.DataFrame({
-        "age": [25, 30],                    # Valid integers in range
-        "city": ["Vancouver", "Toronto"]    # Valid categorical values
-    })
-    
+    # --- Edge Case 1: Valid DataFrame (success path) ---
+    df_valid = pd.DataFrame({"age": [25, 30], "city": ["Vancouver", "Toronto"]})
     result = validate_contract(df_valid, contract)
-    
-    # Assertions for success path
-    assert result.ok is True, \
-        "Validation should succeed for valid data that meets all contract requirements"
-    
-    assert len(result.issues) == 0, \
-        f"Expected no validation issues for valid data, but found {len(result.issues)}: " \
-        f"{[issue.message for issue in result.issues]}"
+    assert result.ok is True
+    assert len(result.issues) == 0
 
-    # ========================================================================
-    # Edge Case 2: Missing Required Column (Schema Violation)
-    # ========================================================================
-    # Purpose: Verify that missing required columns are detected
-    # Expected: Validation fails with 'missing_column' issue
-    #
-    # Test data intentionally omits the 'age' column, which is defined in
-    # the contract and therefore required. Only 'city' is provided.
-    # 
-    # Note: All columns in the contract are treated as required by default
-    
-    df_missing = pd.DataFrame({
-        "city": ["Vancouver"]  # 'age' column is missing
-    })
-    
+    # --- Edge Case 2: Missing required column (strict mode) ---
+    df_missing = pd.DataFrame({"city": ["Vancouver"]})
     result_strict = validate_contract(df_missing, contract, strict=True)
-    
-    # Assertions for missing column detection
-    assert result_strict.ok is False, \
-        "Validation should fail when required columns are missing from DataFrame"
-    
-    # Verify that a 'missing_column' issue was recorded
-    missing_column_issues = [
-        issue for issue in result_strict.issues 
-        if issue.kind == "missing_column"
-    ]
-    
-    assert len(missing_column_issues) > 0, \
-        "Expected at least one 'missing_column' issue, but none were found. " \
-        f"All issues: {[issue.kind for issue in result_strict.issues]}"
-    
-    # Additional check: Verify it's specifically the 'age' column that's missing
-    assert any(issue.column == "age" for issue in missing_column_issues), \
-        f"Expected 'age' column to be reported as missing, but got: " \
-        f"{[issue.column for issue in missing_column_issues]}"
+    # Should fail because 'age' is missing
+    assert result_strict.ok is False
+    assert any(issue.kind == "missing_column" for issue in result_strict.issues)
 
-    # ========================================================================
-    # Edge Case 3: Data Type Mismatch (Type Validation)
-    # ========================================================================
-    # Purpose: Verify that incorrect data types are detected
-    # Expected: Validation fails with 'dtype' issue
-    #
-    # Test data provides 'age' as strings ["25", "30"] instead of integers.
-    # The contract specifies dtype="int64", so this should fail validation.
-    #
-    # Note: Type checking is strict except for string type normalization
-    # (object/str/string are treated as equivalent)
-    
-    df_wrong_type = pd.DataFrame({
-        "age": ["25", "30"],                # WRONG: strings instead of int64
-        "city": ["Vancouver", "Toronto"]    # Correct type (object)
-    })
-    
+    # --- Edge Case 3: Data type mismatch ---
+    df_wrong_type = pd.DataFrame(
+        {"age": ["25", "30"], "city": ["Vancouver", "Toronto"]}
+    )
+    # Should fail because 'age' is str instead of int64
     result_type = validate_contract(df_wrong_type, contract)
-    
-    # Assertions for type mismatch detection
-    assert result_type.ok is False, \
-        "Validation should fail when column data types don't match contract"
-    
-    # Verify that a 'dtype' issue was recorded
-    dtype_issues = [
-        issue for issue in result_type.issues 
-        if issue.kind == "dtype"
-    ]
-    
-    assert len(dtype_issues) > 0, \
-        "Expected at least one 'dtype' issue, but none were found. " \
-        f"All issues: {[issue.kind for issue in result_type.issues]}"
-    
-    # Additional check: Verify the issue is for the 'age' column
-    assert any(issue.column == "age" for issue in dtype_issues), \
-        f"Expected 'age' column to have dtype issue, but got: " \
-        f"{[issue.column for issue in dtype_issues]}"
+    assert result_type.ok is False
+    assert any(issue.kind == "dtype" for issue in result_type.issues)
 
-    # ========================================================================
-    # Edge Case 4: Numeric Range Violation (Boundary Checking)
-    # ========================================================================
-    # Purpose: Verify that out-of-range numeric values are detected
-    # Expected: Validation fails with 'range' issue
-    #
-    # Test data provides age=150, which exceeds the maximum allowed value
-    # of 100 defined in the contract's min_value/max_value constraints.
-    #
-    # This tests the numeric bounds checking logic for values above the max.
-    # (Could also test below min with negative values like age=-5)
-    
-    df_out_of_range = pd.DataFrame({
-        "age": [150],           # WRONG: 150 > max_value (100)
-        "city": ["Toronto"]     # Correct value
-    })
-    
+    # --- Edge Case 4: Numeric range violation ---
+    df_out_of_range = pd.DataFrame({"age": [150], "city": ["Toronto"]})
+    # Should fail because age 150 is above max_value 100
     result_range = validate_contract(df_out_of_range, contract)
-    
-    # Assertions for range violation detection
-    assert result_range.ok is False, \
-        "Validation should fail when numeric values exceed min/max bounds"
-    
-    # Verify that a 'range' issue was recorded
-    range_issues = [
-        issue for issue in result_range.issues 
-        if issue.kind == "range"
-    ]
-    
-    assert len(range_issues) > 0, \
-        "Expected at least one 'range' issue, but none were found. " \
-        f"All issues: {[issue.kind for issue in result_range.issues]}"
-    
-    # Additional checks: Verify the details of the range violation
-    assert any(issue.column == "age" for issue in range_issues), \
-        f"Expected 'age' column to have range issue"
-    
-    # Could also verify: issue.expected (max_value=100) and issue.observed (150)
+    assert result_range.ok is False
+    assert any(issue.kind == "range" for issue in result_range.issues)
 
-    # ========================================================================
-    # Edge Case 5: Invalid Categorical Values (Domain Validation)
-    # ========================================================================
-    # Purpose: Verify that disallowed categorical values are detected
-    # Expected: Validation fails with 'category' issue
-    #
-    # Test data provides city="Seattle", which is not in the allowed_values
-    # set {"Vancouver", "Toronto"} defined in the contract.
-    #
-    # This tests that categorical domain validation correctly identifies
-    # values outside the permitted set.
-    
-    df_bad_cat = pd.DataFrame({
-        "age": [25],            # Correct value
-        "city": ["Seattle"]     # WRONG: Not in {"Vancouver", "Toronto"}
-    })
-    
+    # --- Edge Case 5: Invalid categorical values ---
+    df_bad_cat = pd.DataFrame({"age": [25], "city": ["Seattle"]})
+    # Should fail because 'Seattle' is not an allowed city
     result_cat = validate_contract(df_bad_cat, contract)
-    
-    # Assertions for categorical violation detection
-    assert result_cat.ok is False, \
-        "Validation should fail when categorical values are not in allowed set"
-    
-    # Verify that a 'category' issue was recorded
-    category_issues = [
-        issue for issue in result_cat.issues 
-        if issue.kind == "category"
-    ]
-    
-    assert len(category_issues) > 0, \
-        "Expected at least one 'category' issue, but none were found. " \
-        f"All issues: {[issue.kind for issue in result_cat.issues]}"
-    
-    # Additional check: Verify it's the 'city' column with the violation
-    assert any(issue.column == "city" for issue in category_issues), \
-        f"Expected 'city' column to have category issue, but got: " \
-        f"{[issue.column for issue in category_issues]}"
-    
-    # Could also verify: issue.observed contains "Seattle" and
-    # issue.expected contains {"Vancouver", "Toronto"}
+    assert result_cat.ok is False
+    assert any(issue.kind == "category" for issue in result_cat.issues)
