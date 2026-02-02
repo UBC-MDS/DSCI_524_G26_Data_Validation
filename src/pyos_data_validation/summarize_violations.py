@@ -98,17 +98,17 @@ def summarize_violations(
 
     >>> import pandas as pd
     >>> from pyos_data_validation import infer_contract, validate_contract, summarize_violations
-    >>> 
+    >>>
     >>> # Create training data to establish contract
     >>> training_df = pd.DataFrame({
     ...     "age": [25, 40, 35],
     ...     "salary": [50000, 75000, 62000],
     ...     "department": ["HR", "Engineering", "Sales"]
     ... })
-    >>> 
+    >>>
     >>> # Infer contract from training data
     >>> contract = infer_contract(training_df)
-    >>> 
+    >>>
     >>> # Create test data with violations
     >>> test_df = pd.DataFrame({
     ...     "age": [30, 55, 22],  # 55 and 22 outside expected range
@@ -116,16 +116,16 @@ def summarize_violations(
     ...     "department": ["HR", "Sales", "Marketing"],  # Marketing not in contract
     ...     "bonus": [5000, 8000, 3000]  # Extra column not in contract
     ... })
-    >>> 
+    >>>
     >>> # Validate and get issues
     >>> result = validate_contract(test_df, contract)
     >>> summary = summarize_violations(result, top_k=3)
-    >>> 
+    >>>
     >>> print(f"Validation passed: {summary.ok}")
     Validation passed: False
     >>> print(f"Found {len(summary.top_issues)} critical issues")
     Found 3 critical issues
-    >>> 
+    >>>
     >>> # Show top issues by severity
     >>> for issue in summary.top_issues:
     ...     print(f"  - {issue.column}: {issue.kind}")
@@ -137,7 +137,7 @@ def summarize_violations(
 
     >>> print(summary.counts_by_kind)
     {'extra_column': 1, 'range': 3, 'category': 1}
-    >>> 
+    >>>
     >>> # Check for critical schema issues
     >>> if summary.counts_by_kind.get('missing_column', 0) > 0:
     ...     print("Critical: Missing required columns!")
@@ -160,7 +160,7 @@ def summarize_violations(
     ...         'missingness': 3
     ...     }
     ... )
-    >>> 
+    >>>
     >>> # Now range issues come first
     >>> print(f"Top issue type: {custom_summary.top_issues[0].kind}")
     Top issue type: range
@@ -175,10 +175,10 @@ def summarize_violations(
     ...     "salary": [58000, 72000],
     ...     "department": ["HR", "Sales"]
     ... })
-    >>> 
+    >>>
     >>> result = validate_contract(valid_df, contract)
     >>> summary = summarize_violations(result)
-    >>> 
+    >>>
     >>> print(f"Validation passed: {summary.ok}")
     Validation passed: True
     >>> print(f"Issues found: {len(summary.top_issues)}")

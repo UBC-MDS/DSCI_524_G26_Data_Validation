@@ -36,6 +36,7 @@ def test_infer_contract_creates_rule_per_column():
 
     assert set(contract.columns.keys()) == {"age", "height"}
 
+
 # This test verifies that each entry in contract.columns
 # is stored as a ColumnRule object.
 # This ensures the contract contains structured, typed rules
@@ -76,7 +77,7 @@ def test_numeric_and_categorical_rules():
     assert contract.columns["cat"].allowed_values == {"a", "b"}
 
 
-# Milestone 4 Functions 
+# Milestone 4 Functions
 # This test verifies that an empty DataFrame produces
 # an empty contract with no column rules.
 # The function should fail gracefully rather than error.
@@ -112,8 +113,3 @@ def test_boolean_column_allowed_values():
     df = pd.DataFrame({"flag": [True, False, True]})
     contract = infer_contract(df)
     assert contract.columns["flag"].allowed_values == {"True", "False"}
-
-
-
-
-

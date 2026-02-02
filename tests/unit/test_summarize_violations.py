@@ -21,12 +21,12 @@ from pyos_data_validation.types import ValidationResult, Issue
 
 def test_empty_result():
     """Test that empty ValidationResult returns empty Summary.
-    
+
     When validation passes with no issues, summarize_violations should:
     - Return ok=True (matching the input result)
     - Return an empty top_issues list
     - Return an empty counts_by_kind dictionary
-    
+
     This is the "happy path" scenario where all data is valid.
     """
     result = ValidationResult(ok=True, issues=[])
@@ -40,12 +40,12 @@ def test_empty_result():
 
 def test_single_issue():
     """Test with one issue.
-    
+
     With exactly one validation issue, summarize_violations should:
     - Return ok=False
     - Return that single issue in top_issues
     - Count that issue correctly in counts_by_kind
-    
+
     This tests the minimal failing case.
     """
     issue = Issue(kind="dtype", message="Type mismatch", column="age")
@@ -61,11 +61,11 @@ def test_single_issue():
 
 def test_ok_field_matches_result():
     """Test that summary.ok matches result.ok.
-    
+
     The summary's ok field should always mirror the validation result's ok field:
     - True when result.ok is True
     - False when result.ok is False
-    
+
     This ensures consistency between validation results and summaries.
     """
     result_ok = ValidationResult(ok=True, issues=[])
@@ -86,11 +86,11 @@ def test_ok_field_matches_result():
 
 def test_top_k_limits_results():
     """Test that top_k limits the number of returned issues.
-    
+
     The top_k parameter should:
     - Limit top_issues to the specified number
     - NOT affect counts_by_kind (which should include all issues)
-    
+
     This is important for producing concise summaries while maintaining
     complete statistics about all issue types.
     """
@@ -108,11 +108,11 @@ def test_top_k_limits_results():
 
 def test_top_k_exceeds_issue_count():
     """Test that top_k larger than issue count returns all issues.
-    
+
     When top_k is larger than the number of available issues:
     - Return all available issues
     - Do not pad with empty/null issues
-    
+
     This prevents array index errors and handles small issue lists gracefully.
     """
     issues = [
@@ -139,12 +139,12 @@ def test_top_k_exceeds_issue_count():
 )
 def test_top_k_various_values(top_k, expected_count):
     """Test top_k with various values using parametrization.
-    
+
     This parametrized test verifies that top_k works correctly across
     a range of values, including edge cases like:
     - top_k = 1 (minimum)
     - top_k > number of issues (returns all)
-    
+
     Ensures robust handling of different top_k parameters.
     """
     issues = [
@@ -164,7 +164,7 @@ def test_top_k_various_values(top_k, expected_count):
 
 def test_severity_ranking():
     """Test that issues are ranked by severity using default weights.
-    
+
     Default severity weights (higher = more severe):
     - missing_column: 10 (most severe)
     - extra_column: 8
@@ -172,7 +172,7 @@ def test_severity_ranking():
     - range: 5
     - category: 5
     - missingness: 3 (least severe)
-    
+
     This test ensures schema-level issues (missing columns) are prioritized
     over distribution-level issues (missingness).
     """
@@ -193,11 +193,11 @@ def test_severity_ranking():
 
 def test_custom_weights():
     """Test that custom weights override defaults.
-    
+
     Users can provide custom weights to prioritize specific issue types
     based on their use case. For example, a user might care more about
     range violations than dtype mismatches.
-    
+
     Custom weights completely replace the defaults.
     """
     issues = [
@@ -215,11 +215,11 @@ def test_custom_weights():
 
 def test_unknown_kind_defaults_to_weight_one():
     """Test that issue kinds not in custom weights default to weight 1.
-    
+
     When custom weights are provided but don't cover all issue kinds:
     - Known kinds use their specified weights
     - Unknown kinds default to weight 1
-    
+
     This ensures all issues are still ranked, even with partial weight
     specifications.
     """
@@ -239,10 +239,10 @@ def test_unknown_kind_defaults_to_weight_one():
 
 def test_float_weights():
     """Test that float weights work correctly.
-    
+
     Weights can be float values (not just integers), allowing for
     fine-grained severity tuning.
-    
+
     This is useful when users need precise control over prioritization.
     """
     issues = [
@@ -263,12 +263,12 @@ def test_float_weights():
 
 def test_tiebreaker_ordering():
     """Test that issues with same weight are ordered by column, then kind.
-    
+
     When multiple issues have the same severity weight, they are ordered by:
     1. Column name (None/null sorts first, then alphabetically)
     2. Kind (alphabetically)
     3. Original order in result.issues
-    
+
     This deterministic tiebreaking ensures consistent, predictable results
     even when issues have equal severity.
     """
@@ -306,12 +306,12 @@ def test_tiebreaker_ordering():
 
 def test_counts_by_kind_with_multiple_kinds():
     """Test that counts_by_kind correctly groups diverse issues.
-    
+
     The counts_by_kind dictionary should:
     - Group issues by their kind
     - Count each group accurately
     - Include all kinds present in the result
-    
+
     This provides a high-level overview of issue distribution,
     useful for identifying patterns in validation failures.
     """
@@ -338,10 +338,10 @@ def test_counts_by_kind_with_multiple_kinds():
 
 def test_counts_by_kind_single_kind():
     """Test counts_by_kind with all issues of same kind.
-    
+
     When all issues are of the same type, counts_by_kind should
     have a single entry with the correct total count.
-    
+
     This edge case ensures the counting logic handles homogeneous
     issue lists correctly.
     """
@@ -362,10 +362,10 @@ def test_counts_by_kind_single_kind():
 
 def test_invalid_result_type():
     """Test that invalid result type raises TypeError.
-    
+
     summarize_violations should only accept ValidationResult objects.
     Passing any other type should raise a clear TypeError.
-    
+
     This prevents misuse and provides clear error messages.
     """
     with pytest.raises(TypeError):
@@ -374,7 +374,7 @@ def test_invalid_result_type():
 
 def test_negative_top_k():
     """Test that negative top_k raises ValueError.
-    
+
     top_k must be a positive integer. Negative values don't make
     logical sense (can't return negative number of issues).
     """
@@ -386,7 +386,7 @@ def test_negative_top_k():
 
 def test_zero_top_k():
     """Test that top_k=0 raises ValueError.
-    
+
     top_k must be at least 1. Zero doesn't make sense as it would
     return no issues, defeating the purpose of summarization.
     """
@@ -398,10 +398,10 @@ def test_zero_top_k():
 
 def test_non_integer_top_k():
     """Test that non-integer top_k raises TypeError or ValueError.
-    
+
     top_k must be an integer. Float or string values should be rejected
     even if they could be converted to integers.
-    
+
     This enforces type safety and prevents ambiguous behavior.
     """
     result = ValidationResult(ok=True, issues=[])
@@ -415,7 +415,7 @@ def test_non_integer_top_k():
 
 def test_negative_weight_raises_error():
     """Test that negative weights raise ValueError.
-    
+
     Weights represent severity and must be positive. Negative weights
     would create illogical prioritization.
     """
@@ -427,7 +427,7 @@ def test_negative_weight_raises_error():
 
 def test_zero_weight_raises_error():
     """Test that zero weights raise ValueError.
-    
+
     Zero-weighted issues would have no priority and create ambiguous
     sorting. Minimum weight should be a small positive number.
     """
@@ -439,7 +439,7 @@ def test_zero_weight_raises_error():
 
 def test_non_numeric_weight_raises_error():
     """Test that non-numeric weight values raise ValueError.
-    
+
     Weights must be numeric (int or float) to enable severity comparison.
     String values like "high" or "critical" are not allowed.
     """
@@ -451,10 +451,10 @@ def test_non_numeric_weight_raises_error():
 
 def test_weights_not_dict_raises_error():
     """Test that non-dict weights parameter raises TypeError.
-    
+
     The weights parameter must be a dictionary mapping issue kinds to
     numeric weights. Lists, tuples, or strings are not valid.
-    
+
     This enforces the expected data structure.
     """
     result = ValidationResult(ok=True, issues=[])
@@ -468,10 +468,10 @@ def test_weights_not_dict_raises_error():
 
 def test_mixed_valid_invalid_weights():
     """Test that dict with some invalid weights raises ValueError.
-    
+
     If even one weight in the dictionary is invalid (negative, zero,
     or non-numeric), the entire weights parameter should be rejected.
-    
+
     This fails-fast approach prevents partial application of invalid
     weight specifications.
     """
@@ -492,12 +492,12 @@ def test_mixed_valid_invalid_weights():
 
 def test_realistic_validation_summary():
     """Test with a realistic scenario combining multiple aspects.
-    
+
     This integration test simulates a real-world validation failure with:
     - Multiple issue types at different severity levels
     - A mix of schema and distribution problems
     - More issues than top_k (tests truncation)
-    
+
     Validates that the complete workflow produces sensible, actionable
     summaries that help users prioritize fixes.
     """
@@ -539,7 +539,7 @@ def test_realistic_validation_summary():
 
 def test_all_default_weight_kinds():
     """Test that all default weight kinds are handled correctly.
-    
+
     This comprehensive test includes one issue of each default kind:
     - missing_column (weight 10)
     - extra_column (weight 8)
@@ -547,7 +547,7 @@ def test_all_default_weight_kinds():
     - range (weight 5)
     - category (weight 5)
     - missingness (weight 3)
-    
+
     Verifies the complete default severity hierarchy is working as designed.
     """
     issues = [
@@ -591,10 +591,10 @@ def test_all_default_weight_kinds():
 
 def test_top_k_equals_one():
     """Test top_k=1 returns only the most severe issue.
-    
+
     With top_k=1, the summary should contain only the single highest-priority
     issue, but counts_by_kind should still reflect all issues.
-    
+
     This is useful for "show me the #1 problem to fix first" scenarios.
     """
     issues = [
@@ -614,10 +614,10 @@ def test_top_k_equals_one():
 
 def test_large_number_of_issues():
     """Test with a large number of issues.
-    
+
     Ensures the function handles large validation results efficiently without
     performance degradation or memory issues.
-    
+
     With 1000 issues but top_k=5, only the top 5 should be returned,
     but all 1000 should be counted.
     """
@@ -634,13 +634,13 @@ def test_large_number_of_issues():
 
 def test_none_column_sorting():
     """Test that issues with column=None are handled correctly in sorting.
-    
+
     Dataset-level issues (column=None) represent problems not tied to a
     specific column. These should sort before column-specific issues.
-    
+
     After dataset-level issues, column-specific issues sort alphabetically
     by column name.
-    
+
     This ensures dataset-level problems get visibility.
     """
     issues = [

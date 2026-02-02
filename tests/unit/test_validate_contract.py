@@ -97,62 +97,62 @@ from pyos_data_validation.types import Contract, ColumnRule
 def test_validate_contract():
     """
     Comprehensive test covering 5 core validation scenarios.
-    
+
     This test function validates the primary edge cases that validate_contract
     must handle correctly. Each scenario tests a different validation rule.
-    
+
     Test Scenarios
     --------------
     1. **Success Path (Happy Path)**
        - Valid data that perfectly matches contract
        - Tests: Complete validation flow with no issues
        - Expected: result.ok = True, no issues
-    
+
     2. **Missing Required Column**
        - DataFrame missing a contract-required column
        - Tests: Schema validation in strict mode
        - Expected: result.ok = False, 'missing_column' issue
-    
+
     3. **Data Type Mismatch**
        - Column has wrong data type (string instead of int)
        - Tests: Type validation logic
        - Expected: result.ok = False, 'dtype' issue
-    
+
     4. **Numeric Range Violation**
        - Numeric value exceeds maximum bound
        - Tests: Numeric range checking
        - Expected: result.ok = False, 'range' issue
-    
+
     5. **Invalid Categorical Values**
        - Categorical value not in allowed set
        - Tests: Categorical domain validation
        - Expected: result.ok = False, 'category' issue
-    
+
     Test Data Characteristics
     -------------------------
     - Uses minimal 1-2 row DataFrames for clarity
     - Each test DataFrame isolates a single validation issue
     - Column names match standard test contract (age, city)
-    
+
     Validation Contract
     -------------------
     age:
         - Type: int64
         - Range: [0, 100]
         - Missing: Not allowed (0%)
-    
+
     city:
         - Type: object
         - Allowed: {"Vancouver", "Toronto"}
         - Missing: Allowed
-    
+
     Expected Outcomes
     -----------------
     All assertions should pass, verifying that:
     - Valid data returns ok=True
     - Each violation type is correctly detected
     - Issue kinds match expected validation failures
-    
+
     Implementation Notes
     --------------------
     This test uses a single function to cover multiple scenarios. Consider
@@ -161,20 +161,20 @@ def test_validate_contract():
     - Easier debugging (can run individual scenarios)
     - Clearer test names (self-documenting)
     - More detailed docstrings per scenario
-    
+
     See Also
     --------
     validate_contract : The function being tested
     create_test_contract : Helper to create standard test contract
-    
+
     Examples
     --------
     Run this specific test:
         $ pytest tests/test_validate_contract.py::test_validate_contract -v
-    
+
     Run with detailed output:
         $ pytest tests/test_validate_contract.py::test_validate_contract -vv
-    
+
     Drop into debugger on failure:
         $ pytest tests/test_validate_contract.py::test_validate_contract --pdb
     """
