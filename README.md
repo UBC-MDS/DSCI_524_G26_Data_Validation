@@ -599,7 +599,7 @@ conda activate pyos_data_validation
 Install the package in editable mode with development dependencies:
 
 ```bash
-pip install -e ".[dev,tests]"
+pip install -e ".[dev,tests,docs]"
 ```
 
 ### Running tests
