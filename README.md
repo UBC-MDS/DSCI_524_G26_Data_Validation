@@ -530,7 +530,9 @@ for kind, count in summary.counts_by_kind.items():
 
 You can install this package locally into your preferred Python environment using pip:
 
-    $ pip install -e .
+```bash
+    pip install -e .
+```
 
 ### Basic usage
 
@@ -574,13 +576,23 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation.git
+```
+
+Change the directory to the project:
+
+```bash
 cd DSCI_524_G26_Data_Validation
 ```
 
-Create and activate the conda environment:
+Create the conda environment:
 
 ```bash
 conda env create -f environment.yml
+```
+
+Activate the environment: 
+
+```bash
 conda activate pyos_data_validation
 ```
 
