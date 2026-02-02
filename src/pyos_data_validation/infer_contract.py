@@ -27,6 +27,11 @@ def infer_contract(df):
         A Contract object mapping column names to ColumnRule definitions,
         describing the expected schema and constraints of the dataset.
 
+    Raises
+    ------
+    TypeError
+        If df is not a pandas DataFrame.
+
     Examples
     --------
     >>> import pandas as pd

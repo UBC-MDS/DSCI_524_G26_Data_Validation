@@ -52,11 +52,20 @@ def compare_contracts(contract_a, contract_b):
 
     Notes
     -----
-    - This function compares contract metadata only; it does not inspect raw data.
-    - Drift is evaluated only for columns that exist in both contracts, except for
-      added/removed columns which are detected via column name differences.
-    - None handling for optional fields (min_value/max_value/allowed_values) is
-      implementation-defined; document your chosen rule if it matters for users.
+    This function compares contract metadata only and does not inspect raw data.
+    Drift is evaluated only for columns that exist in both contracts, except for
+    added or removed columns detected via column name differences. Handling of
+    optional fields (min_value, max_value, allowed_values) is implementation-
+    defined; document your chosen rule if it matters for users.
+
+    Raises
+    ------
+    TypeError
+        If contract_a or contract_b is not a Contract instance, or if a column
+        rule is not a ColumnRule instance.
+    ValueError
+        If max_missing_frac is non-numeric, outside [0, 1], or if min_value
+        exceeds max_value.
 
     Examples
     --------

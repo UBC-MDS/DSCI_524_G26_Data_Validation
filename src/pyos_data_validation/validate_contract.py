@@ -42,13 +42,13 @@ def validate_contract(df, contract, strict=True):
 
     Notes
     -----
-    The function performs the following checks:
-    - Missing columns defined in the contract
-    - Unexpected extra columns (when strict mode is enabled)
-    - Data type mismatches based on dtype string comparison
-    - Missingness violations based on maximum allowed missing fraction
-    - Minimum and maximum value violations for numeric columns
-    - Invalid or unseen categorical values
+    The function checks for missing required columns, unexpected extra columns
+    (when strict mode is enabled), data type mismatches, missingness violations,
+    numeric range violations, and invalid or unseen categorical values.
+
+    Raises
+    ------
+    None
 
     Examples
     --------
