@@ -1,8 +1,7 @@
 name: Publish Documentation to GitHub Pages
 on:
-  push:
-    tags:
-      - "v*"  # Triggers only when you push a tag like v0.1.0
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
