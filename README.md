@@ -467,12 +467,12 @@ print(f"Validation passed: {summary.ok}")
 print(f"Total issues: {len(result.issues)}")
 
 # Show top 5 most severe issues
-print("\n🔴 Top Issues to Fix:")
+print("\n Top Issues to Fix:")
 for i, issue in enumerate(summary.top_issues, 1):
     print(f"{i}. [{issue.kind}] {issue.column}: {issue.message}")
 
 # Example output:
-# 🔴 Top Issues to Fix:
+#  Top Issues to Fix:
 # 1. [missing_column] user_id: Missing required column: user_id
 # 2. [extra_column] debug_flag: Unexpected extra column: debug_flag
 # 3. [dtype] age: age: expected int64, got object
@@ -504,12 +504,12 @@ for kind, count in summary.counts_by_kind.items():
 |---------|---------------------|---------|-------------------|----------|
 | **Target Use Case** | Educational, lightweight validation | Production data validation | Enterprise data quality | API input validation |
 | **Learning Curve** | Low | Medium | High | Low-Medium |
-| **Contract Inference** | ✅ Automatic | ⚠️ Limited | ✅ Profiling | ❌ Manual only |
-| **Drift Detection** | ✅ Built-in | ❌ No | ✅ Via profiling | ❌ No |
-| **Tabular Data Focus** | ✅ Yes | ✅ Yes | ✅ Yes | ❌ No (objects) |
-| **CI/CD Friendly** | ✅ Simple integration | ✅ Yes | ⚠️ Complex setup | ✅ Yes |
-| **Minimal Dependencies** | ✅ pandas only | ⚠️ Medium | ❌ Heavy | ✅ Minimal |
-| **Validation Customization** | ⚠️ Basic | ✅ Extensive | ✅ Extensive | ✅ Extensive |
+| **Contract Inference** |  Automatic |  Limited |  Profiling |  Manual only |
+| **Drift Detection** |  Built-in |  No |  Via profiling |  No |
+| **Tabular Data Focus** |  Yes | Yes | Yes | No (objects) |
+| **CI/CD Friendly** | Simple integration | Yes |  Complex setup |  Yes |
+| **Minimal Dependencies** |  pandas only |  Medium |  Heavy |  Minimal |
+| **Validation Customization** |  Basic |  Extensive |  Extensive |  Extensive |
 
 **When to use pyos_data_validation:**
 - Small to medium projects
