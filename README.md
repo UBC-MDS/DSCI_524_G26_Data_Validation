@@ -3,7 +3,7 @@
 |        |        |
 |--------|--------|
 | Package | [![TestPyPI](https://img.shields.io/badge/TestPyPI-0.1.3-blue)](https://test.pypi.org/project/pyos-data-validation/) [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue)](https://test.pypi.org/project/pyos-data-validation/) |
-| CI / Release | [![deploy-test-pypi](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml) [![codecov](https://codecov.io/gh/UBC-MDS/DSCI_524_G26_Data_Validation/branch/main/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/DSCI_524_G26_Data_Validation) |
+| CI / Release | [![Release to TestPyPI](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/release.yml) [![codecov](https://codecov.io/gh/UBC-MDS/DSCI_524_G26_Data_Validation/branch/main/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/DSCI_524_G26_Data_Validation) |
 | Meta   | [![Code of Conduct](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md) |
 | Documentation | [View Full Documentation](https://ubc-mds.github.io/DSCI_524_G26_Data_Validation/) |
 
