@@ -16,6 +16,11 @@ You can contribute in many ways, for example:
     - [Submit Feedback](#submit-feedback)
   - [Get Started!](#get-started)
     - [Pull Request Guidelines](#pull-request-guidelines)
+  - [Development Tools, Infrastructure, and Practices](#development-tools-infrastructure-and-practices)
+    - [Development Tools](#development-tools)
+    - [GitHub Infrastructure](#github-infrastructure)
+    - [Organizational and Collaboration Practices](#organizational-and-collaboration-practices)
+  - [Scaling Considerations](#scaling-considerations)
 
 ### Report Bugs
 
@@ -114,3 +119,44 @@ Before you submit a pull request, check that it meets these guidelines:
    new functionality into a function with a docstring.
 3. Your pull request will automatically be checked by the full test suite.
    It needs to pass all of them before it can be considered for merging.
+
+---
+
+## Development Tools, Infrastructure, and Practices
+
+This project applies modern Python development workflows and collaborative practices learned in DSCI 524, with a strong emphasis on reproducibility, automation, and code quality.
+
+### Development Tools
+
+* **Hatch** is used for environment management, testing, and task execution. This ensures consistent developer environments and simplifies common workflows such as running tests and checks.
+* **Ruff** is used for formatting and linting to enforce PEP 8–compliant, readable code and to provide fast feedback during development.
+* **Pytest** is used for automated testing to validate correctness and prevent regressions as the codebase evolves.
+* **Quartodoc + Quarto** are used to generate API documentation directly from docstrings, ensuring documentation stays closely aligned with the code.
+
+### GitHub Infrastructure
+
+* **GitHub Issues** are used to track bugs, feature requests, and documentation improvements, with labels (`bug`, `enhancement`, `help wanted`) to organize work and encourage contributions.
+* **Pull Requests** are the primary mechanism for code review, discussion, and integration. All changes are reviewed before merging.
+* **GitHub Actions (CI)** automatically run tests, formatting checks, and build steps on every pull request to `main`, ensuring consistent quality standards and preventing broken code from being merged.
+* **Branch-based development** is used, with feature and fix branches (`feat/*`, `fix/*`) to keep the main branch stable.
+
+### Organizational and Collaboration Practices
+
+* **Semantic commit messages** (Conventional Commits) improve readability of the project history and support changelog generation.
+* **Consistent docstring standards** ensure functions are easy to understand and maintain, especially for new contributors.
+* **Clear contribution guidelines** lower the barrier to entry for contributors and help standardize collaboration across the team.
+
+---
+
+## Scaling Considerations
+
+If this project (or a similar one) were to scale to a larger user base or contributor community, the following tools and practices would be adopted or expanded:
+
+* **Stricter CI gates**, such as required test coverage thresholds and branch protection rules, to maintain code quality at scale.
+* **Dependency monitoring** tools (e.g., Dependabot) to keep dependencies secure and up to date.
+* **Pre-commit hooks** to catch formatting, linting, and documentation issues earlier in the development cycle.
+* **Expanded documentation and examples**, including tutorials and usage guides, to support a broader audience.
+* **Issue and PR templates refinement**, ensuring high-quality reports and consistent reviews as contribution volume grows.
+
+These tools and practices help ensure that the project remains maintainable, reliable, and welcoming as it scales in complexity and community size.
+

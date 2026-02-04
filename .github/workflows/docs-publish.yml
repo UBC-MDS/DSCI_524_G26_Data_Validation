@@ -1,5 +1,4 @@
-name: 03b-quartodoc-publish
-
+name: Publish Documentation to GitHub Pages
 on:
   pull_request:
     branches: [ main ]

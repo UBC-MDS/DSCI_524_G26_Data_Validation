@@ -2,20 +2,18 @@
 
 |        |        |
 |--------|--------|
-| Package | [![Latest PyPI Version](https://img.shields.io/pypi/v/pyos_data_validation.svg)](https://pypi.org/project/pyos_data_validation/) [![Supported Python Versions](https://img.shields.io/pypi/pyversions/pyos_data_validation.svg)](https://pypi.org/project/pyos_data_validation/) |
-| CI / Release | [![deploy-test-pypi](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml) |
+| Package | [![TestPyPI](https://img.shields.io/badge/TestPyPI-0.1.3-blue)](https://test.pypi.org/project/pyos-data-validation/) [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue)](https://test.pypi.org/project/pyos-data-validation/) |
+| CI / Release | [![deploy-test-pypi](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/actions/workflows/deploy.yml) [![codecov](https://codecov.io/gh/UBC-MDS/DSCI_524_G26_Data_Validation/branch/main/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/DSCI_524_G26_Data_Validation) |
 | Meta   | [![Code of Conduct](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md) |
 | Documentation | [View Full Documentation](https://ubc-mds.github.io/DSCI_524_G26_Data_Validation/) |
-
-
 
 `pyos_data_validation` is a lightweight Python package for defining, validating, and comparing **data contracts** for tabular datasets. It enables data scientists to formalize assumptions about their data—such as schema, missingness constraints, numeric ranges, and categorical domains—and to automatically validate new datasets against those expectations. The package supports reproducible workflows and CI-friendly automation by producing structured validation outputs and clear, actionable error messages suitable for use in unit tests and GitHub Actions.
 
 ---
 
 ## Table of Contents
-- [Quick Start](#get-started)
 - [Function Reference](#function-reference)
+- [Quick Start](#get-started)
 - [Usage Examples](#usage-examples)
 - [Developer Guide](#developer-guide)
 - [Contributors](#contributors)
@@ -468,12 +466,12 @@ print(f"Validation passed: {summary.ok}")
 print(f"Total issues: {len(result.issues)}")
 
 # Show top 5 most severe issues
-print("\n🔴 Top Issues to Fix:")
+print("\n Top Issues to Fix:")
 for i, issue in enumerate(summary.top_issues, 1):
     print(f"{i}. [{issue.kind}] {issue.column}: {issue.message}")
 
 # Example output:
-# 🔴 Top Issues to Fix:
+#  Top Issues to Fix:
 # 1. [missing_column] user_id: Missing required column: user_id
 # 2. [extra_column] debug_flag: Unexpected extra column: debug_flag
 # 3. [dtype] age: age: expected int64, got object
@@ -501,16 +499,16 @@ for kind, count in summary.counts_by_kind.items():
 
 `pyos_data_validation` is inspired by production-grade data validation frameworks but serves a different purpose:
 
-| Feature | pyos_data_validation | Pandera | Great Expectations | Pydantic |
+| Feature | pyos_data_validation | [Pandera](https://pandera.readthedocs.io/) | [Great Expectations](https://greatexpectations.io/) | [Pydantic](https://docs.pydantic.dev/) |
 |---------|---------------------|---------|-------------------|----------|
 | **Target Use Case** | Educational, lightweight validation | Production data validation | Enterprise data quality | API input validation |
 | **Learning Curve** | Low | Medium | High | Low-Medium |
-| **Contract Inference** | ✅ Automatic | ⚠️ Limited | ✅ Profiling | ❌ Manual only |
-| **Drift Detection** | ✅ Built-in | ❌ No | ✅ Via profiling | ❌ No |
-| **Tabular Data Focus** | ✅ Yes | ✅ Yes | ✅ Yes | ❌ No (objects) |
-| **CI/CD Friendly** | ✅ Simple integration | ✅ Yes | ⚠️ Complex setup | ✅ Yes |
-| **Minimal Dependencies** | ✅ pandas only | ⚠️ Medium | ❌ Heavy | ✅ Minimal |
-| **Validation Customization** | ⚠️ Basic | ✅ Extensive | ✅ Extensive | ✅ Extensive |
+| **Contract Inference** |  Automatic |  Limited |  Profiling |  Manual only |
+| **Drift Detection** |  Built-in |  No |  Via profiling |  No |
+| **Tabular Data Focus** |  Yes | Yes | Yes | No (objects) |
+| **CI/CD Friendly** | Simple integration | Yes |  Complex setup |  Yes |
+| **Minimal Dependencies** |  pandas only |  Medium |  Heavy |  Minimal |
+| **Validation Customization** |  Basic |  Extensive |  Extensive |  Extensive |
 
 **When to use pyos_data_validation:**
 - Small to medium projects
@@ -520,9 +518,9 @@ for kind, count in summary.counts_by_kind.items():
 - When you need simple drift detection out of the box
 
 **When to use alternatives:**
-- **Pandera**: Production ML pipelines with complex validation rules and custom checks
-- **Great Expectations**: Enterprise data quality monitoring with extensive reporting and data docs
-- **Pydantic**: API request/response validation or configuration management with type safety
+- **[Pandera](https://pandera.readthedocs.io/)**: Production ML pipelines with complex validation rules and custom checks
+- **[Great Expectations](https://greatexpectations.io/)**: Enterprise data quality monitoring with extensive reporting and data docs
+- **[Pydantic](https://docs.pydantic.dev/)**: API request/response validation or configuration management with type safety
 
 ---
 
@@ -530,7 +528,9 @@ for kind, count in summary.counts_by_kind.items():
 
 You can install this package locally into your preferred Python environment using pip:
 
-    $ pip install -e .
+```bash
+    pip install -e .
+```
 
 ### Basic usage
 
@@ -574,20 +574,30 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation.git
+```
+
+Change the directory to the project:
+
+```bash
 cd DSCI_524_G26_Data_Validation
 ```
 
-Create and activate the conda environment:
+Create the conda environment:
 
 ```bash
 conda env create -f environment.yml
+```
+
+Activate the environment: 
+
+```bash
 conda activate pyos_data_validation
 ```
 
 Install the package in editable mode with development dependencies:
 
 ```bash
-pip install -e ".[dev,tests]"
+pip install -e ".[dev,tests,docs]"
 ```
 
 ### Running tests
@@ -670,7 +680,3 @@ View the live documentation at: https://ubc-mds.github.io/DSCI_524_G26_Data_Vali
 - [Full Documentation](https://ubc-mds.github.io/DSCI_524_G26_Data_Validation/)
 - [Issue Tracker](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/issues)
 - [Project Board](https://github.com/UBC-MDS/DSCI_524_G26_Data_Validation/projects?query=is%3Aopen)
-- [Pandera](https://github.com/unionai-oss/pandera)
-- [Great Expectations](https://github.com/great-expectations/great_expectations)
-- [Pydantic](https://github.com/pydantic/pydantic)
-
