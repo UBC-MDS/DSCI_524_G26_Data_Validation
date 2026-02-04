@@ -2,70 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/CODE_OF_CONDUCT.html</loc>
-    <lastmod>2026-02-02T05:41:23.003Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.723Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/validate_contract.html</loc>
-    <lastmod>2026-02-02T05:41:23.013Z</lastmod>
+    <lastmod>2026-02-04T00:33:31.299Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/types.DriftReport.html</loc>
-    <lastmod>2026-02-02T05:41:23.013Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.734Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/types.ColumnRule.html</loc>
-    <lastmod>2026-02-02T05:41:23.013Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.734Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/compare_contracts.html</loc>
-    <lastmod>2026-02-02T05:41:23.013Z</lastmod>
+    <lastmod>2026-02-04T00:33:31.307Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/types.ValidationResult.html</loc>
-    <lastmod>2026-02-02T05:41:23.013Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.734Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/types.Issue.html</loc>
-    <lastmod>2026-02-02T05:41:23.013Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.734Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/CONTRIBUTING.html</loc>
-    <lastmod>2026-02-02T05:41:23.003Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.723Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/CHANGELOG.html</loc>
-    <lastmod>2026-02-02T05:41:23.003Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.722Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/DEVELOPMENT.html</loc>
-    <lastmod>2026-02-02T05:41:23.003Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.723Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/index.html</loc>
-    <lastmod>2026-02-02T05:41:23.012Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.733Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/infer_contract.html</loc>
-    <lastmod>2026-02-02T05:41:50.828Z</lastmod>
+    <lastmod>2026-02-04T00:33:31.291Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/index.html</loc>
-    <lastmod>2026-02-02T05:41:50.800Z</lastmod>
+    <lastmod>2026-02-04T00:33:31.264Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/types.Contract.html</loc>
-    <lastmod>2026-02-02T05:41:23.013Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.734Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/types.ContractViolationError.html</loc>
-    <lastmod>2026-02-02T05:41:23.013Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.734Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/summarize_violations.html</loc>
-    <lastmod>2026-02-02T05:41:50.853Z</lastmod>
+    <lastmod>2026-02-04T00:33:31.317Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-MDS.github.io/DSCI_524_G26_Data_Validation/reference/types.Summary.html</loc>
-    <lastmod>2026-02-02T05:41:23.013Z</lastmod>
+    <lastmod>2026-02-04T00:33:03.734Z</lastmod>
   </url>
 </urlset>
